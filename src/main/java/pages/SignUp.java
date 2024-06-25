@@ -4,18 +4,16 @@ import io.github.cdimascio.dotenv.Dotenv;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.List;
 
 public class SignUp {
-    private Dotenv dotenv = Dotenv.configure().load();
-    private String signupUsername = dotenv.get("SIGNUP_USERNAME");
-    private String signupEmail = dotenv.get("SIGNUP_EMAIL");
-    private String signupPassword = dotenv.get("SIGNUP_PASSWORD");
+    private final Dotenv dotenv = Dotenv.configure().load();
+    private final String username = dotenv.get("REPTILE_USER_USERNAME");
+    private final String email = dotenv.get("REPTILE_USER_EMAIL");
+    private final String password = dotenv.get("REPTILE_USER_PASSWORD");
 
     private WebDriver driver;
     private WebDriverWait wait;
@@ -27,29 +25,21 @@ public class SignUp {
 
     public void fillUsernameField() {
         WebElement inputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user-name")));
-        inputField.sendKeys(signupUsername);
+        inputField.sendKeys(username);
     }
 
     public void fillEmailField() {
         WebElement inputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("email")));
-        inputField.sendKeys(signupEmail);
+        inputField.sendKeys(email);
     }
 
     public void fillPasswordField() {
         WebElement inputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
-        inputField.sendKeys(signupPassword);
+        inputField.sendKeys(password);
     }
 
     public void clickOnSignUp() {
-        WebElement button = driver.findElement(By.className("bg-green-800"));
+        WebElement button = driver.findElement(By.xpath("//button[contains(@class, 'mr-4 mt-6 text-white w-full font-bold p-4 bg-green-800') and contains(text(), 'SIGN UP')]"));
         button.click();
-
-//        List<WebElement> buttons = driver.findElements(By.className("bg-green-800"));
-//        for (WebElement button : buttons) {
-//            if (button.getText().equalsIgnoreCase("Sign Up")) {
-//                button.click();
-//                break;
-//            }
-//        }
     }
 }
