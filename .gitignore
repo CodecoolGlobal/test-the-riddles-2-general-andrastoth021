@@ -1,0 +1,45 @@
+# Maven target directory
+/target/
+
+# IntelliJ IDEA specific
+/.idea/
+/*.iws
+/*.iml
+/*.ipr
+/out/
+
+# Logs
+/logs
+*.log
+
+# Environment variables
+.env
+
+# Compiled class files
+*.class
+
+# MacOS specific
+.DS_Store
+
+# Windows specific
+Thumbs.db
+
+# Eclipse specific
+/.settings/
+/.project
+/.classpath
+
+# Build output directories
+/build/
+/bin/
+
+# Selenium specific
+/screenshots/
+
+# General IDE specific
+.vscode/
+*.swp
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints
