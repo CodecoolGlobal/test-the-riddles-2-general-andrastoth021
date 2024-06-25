@@ -11,25 +11,24 @@ import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SignUpTest {
+class LogInTest {
     private WebDriver webDriver;
-    private SignUp signUp;
+    private LogIn logIn;
 
     @BeforeEach
     public void precondition() {
         webDriver = new FirefoxDriver();
-        webDriver.get("http://localhost:3000/register");
-        signUp = new SignUp(webDriver);
+        webDriver.get("http://localhost:3000/login");
+        logIn = new LogIn(webDriver);
     }
 
     @Test
-    public void signUpValidCredentials() {
-        signUp.fillUsernameField();
-        signUp.fillEmailField();
-        signUp.fillPasswordField();
-        signUp.clickOnSignUp();
+    public void logInValidCredentials() {
+        logIn.fillUsernameField();
+        logIn.fillPasswordField();
+        logIn.clickOnLogIn();
 
-        String expectedURL = "http://localhost:3000/login";
+        String expectedURL = "http://localhost:3000/";
         WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.urlToBe(expectedURL));
 
