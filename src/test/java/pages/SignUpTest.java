@@ -29,11 +29,10 @@ public class SignUpTest {
         signUp.fillPasswordField();
         signUp.clickOnSignUp();
 
+        String expectedURL = "http://localhost:3000/login";
         WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.urlToBe("http://localhost:3000/login"));
+        wait.until(ExpectedConditions.urlToBe(expectedURL));
 
-        String currentURL = webDriver.getCurrentUrl();
-
-        assertEquals("http://localhost:3000/login", currentURL);
+        assertEquals(expectedURL, webDriver.getCurrentUrl());
     }
 }
