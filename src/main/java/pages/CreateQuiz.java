@@ -66,4 +66,40 @@ public class CreateQuiz {
             return false;
         }
     }
+
+    public void clickOnFirstQuizEditButton() {
+        clickOnMyQuizzes();
+        WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[1]/div[1]/button[2]")));
+        editButton.click();
+        WebElement saveQuizButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-green-800') and contains(text(), 'Save quiz')]")));
+        if (saveQuizButton.getAccessibleName().equals("Save quiz")) {
+            System.out.println("The edit is possible");
+        } else {
+            System.out.println("It's not possible to edit the quiz");
+        }
+    }
+
+    public void changeFirstQuizTitle(String newTitle) {
+        clickOnMyQuizzes();
+        WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[1]/div[1]/button[2]")));
+        editButton.click();
+        WebElement titleField = wait.until((ExpectedConditions.visibilityOfElementLocated(By.id("name"))));
+        titleField.clear();
+        titleField.sendKeys(newTitle);
+        clickOnSaveQuizButton();
+        handleAlert();
+        clickOnMyQuizzes();
+        isQuizPresent(newTitle);
+    }
+
+    public void canEditQuizWithEmptyTitle() {
+        clickOnMyQuizzes();
+        WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[1]/div/button[2]")));
+        editButton.click();
+        WebElement titleField = wait.until((ExpectedConditions.visibilityOfElementLocated(By.id("name"))));
+        titleField.clear();
+        clickOnSaveQuizButton();
+        handleAlert();
+        clickOnMyQuizzes();
+    }
 }
