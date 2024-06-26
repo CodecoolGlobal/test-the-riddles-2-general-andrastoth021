@@ -40,7 +40,7 @@ public class CreateQuizTest {
 
         // Probléma volt. Alkalmazzuk a Thread.sleep() hívást ideiglenesen
         try {
-            Thread.sleep(5000); // Várakozás 5 másodpercig
+            Thread.sleep(2000); // Várakozás 5 másodpercig
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -71,6 +71,36 @@ public class CreateQuizTest {
     }
 
     @Test
+    public void setTimeForAnswersInQuizQuestion() {
+        int timeForGivingAnswer = 11;
+        createQuiz.clickOnQuizzesMenu();
+        createQuiz.clickOnAddQuizButton();
+        String quizTitle = "Test Quiz for testing time set";
+        createQuiz.enterQuizTitle(quizTitle);
+        createQuiz.clickOnSaveQuizButton();
+        createQuiz.handleAlert();
+        createQuiz.clickOnMyQuizzes();
+        createQuiz.clickOnEditButton();
+        createQuiz.addQuestionButton();
+        createQuiz.enterQuestionTitle("testing time change in answer");
+        createQuiz.enterQuestionTime(timeForGivingAnswer);
+        createQuiz.enterAnswerOptionTitleOne("this will be good");
+        createQuiz.enterAnswerOptionTitleTwo("might be better");
+        createQuiz.selectCorrectAnswer(1);
+        createQuiz.clickOnSaveQuestionButton();
+        createQuiz.handleAlert();
+        createQuiz.clickOnSaveQuizButton();
+        createQuiz.handleAlert();
+        createQuiz.clickOnMyQuizzes();
+        createQuiz.clickOnEditButton();
+        createQuiz.clickValidQuestionButton();
+        int actualTimeLimit = createQuiz.getQuestionTime();
+        assertEquals(timeForGivingAnswer, actualTimeLimit);
+        //webDriver.quit();
+    }
+  
+
+  @Test
     public void testIfEditButtonWorksByClicking() {
         createQuiz.clickOnFirstQuizEditButton();
     }
@@ -118,6 +148,7 @@ public class CreateQuizTest {
         createQuiz.fillAnswerByInputId(6, "#6 Test Answer");
 
         // Click on both save buttons (first save the question and after that the quiz)
+
         createQuiz.clickOnSaveQuestionButton();
         createQuiz.handleAlert();
         createQuiz.clickOnSaveQuizButton();

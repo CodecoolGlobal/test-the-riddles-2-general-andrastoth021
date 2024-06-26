@@ -67,7 +67,7 @@ public class CreateQuiz {
 
     public void handleAlert() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -90,6 +90,63 @@ public class CreateQuiz {
             return false;
         }
     }
+
+
+    public void clickOnEditButton() {
+        WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[1]/div/button[2]")));
+        Actions actions = new Actions(driver);
+        actions.moveToElement(editButton).click().perform();
+    }
+
+    public void addQuestionButton() {
+        WebElement addQuestionButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[1]/button")));
+        Actions actions = new Actions(driver);
+        actions.moveToElement(addQuestionButton).click().perform();
+    }
+
+    public void enterQuestionTitle(String title) {
+        WebElement questionTitleField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("-1question")));
+        questionTitleField.sendKeys(title);
+    }
+
+    public void enterQuestionTime(int seconds) {
+        WebElement questionTimeField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("-1time")));
+        questionTimeField.clear(); // Törli a mező jelenlegi tartalmát
+        questionTimeField.sendKeys(String.valueOf(seconds)); // másodpercek
+    }
+
+    public void enterAnswerOptionTitleOne(String title) {
+        WebElement answerOptionTitleOne = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("answer-1")));
+        answerOptionTitleOne.sendKeys(title);
+    }
+    public void enterAnswerOptionTitleTwo(String title) {
+        WebElement answerOptionTitleTwo = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("answer-2")));
+        answerOptionTitleTwo.sendKeys(title);
+    }
+
+    public void selectCorrectAnswer(int index) {
+        WebElement correctAnswerCheckbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("checkbox-" + index)));
+        correctAnswerCheckbox.click();
+    }
+
+    //public void clickOnSaveQuestionButton() {
+    //    WebElement saveQuestionButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[2]/div[2]/div/div[4]/button[1]")));
+    //    Actions actions = new Actions(driver);
+    //    actions.moveToElement(saveQuestionButton).click().perform();
+    //}
+
+    public void clickValidQuestionButton() {
+        WebElement validQuestionButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[1]/div/button")));
+        Actions actions = new Actions(driver);
+        actions.moveToElement(validQuestionButton).click().perform();
+    }
+
+    public int getQuestionTime() {
+        WebElement questionTimeField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[contains(@id,'time')]")));
+        return Integer.parseInt(questionTimeField.getAttribute("value"));
+    }
+
+
 
     public void clickOnFirstQuizEditButton() {
         clickOnMyQuizzes();
@@ -126,4 +183,5 @@ public class CreateQuiz {
         handleAlert();
         clickOnMyQuizzes();
     }
+
 }
