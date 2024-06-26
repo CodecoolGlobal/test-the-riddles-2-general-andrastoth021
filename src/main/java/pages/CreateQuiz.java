@@ -34,6 +34,35 @@ public class CreateQuiz {
         quizTitleField.sendKeys(title);
     }
 
+    public void clickOnAddQuestion() {
+        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-green-800') and contains(text(), 'Add Question')]")));
+        button.click();
+    }
+
+    public void enterQuestion(String question) {
+        WebElement questionField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[contains(@id, 'question')]")));
+        questionField.sendKeys(question);
+    }
+
+    public void fillAnswerByInputId(int id, String inputValue) {
+        WebElement answerInputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("answer-" + id)));
+        answerInputField.sendKeys(inputValue);
+    }
+
+    public void clickOnAddOptionButton() {
+        /*
+        //button[contains(@class, 'bg-green-800') and contains(text(), 'LOGIN')]
+        //button[contains(@class, 'bg-zinc-700') and contains(text(), '+ Add option')]
+        */
+        WebElement addOptionButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-zinc-700') and contains(text(), '+ Add option')]")));
+        addOptionButton.click();
+    }
+
+    public void clickOnSaveQuestionButton() {
+        WebElement saveQuestionButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-green-800') and contains(text(), 'Save')]")));
+        saveQuestionButton.click();
+    }
+
     public void clickOnSaveQuizButton() {
         WebElement saveQuizButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-green-800') and contains(text(), 'Save quiz')]")));
         Actions actions = new Actions(driver);
