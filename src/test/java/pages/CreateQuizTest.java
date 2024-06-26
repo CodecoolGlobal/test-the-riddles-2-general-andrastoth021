@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CreateQuizTest {
     private WebDriver webDriver;
@@ -62,5 +63,47 @@ public class CreateQuizTest {
         assertTrue(createQuiz.isQuizPresent(quizTitle));
 
         webDriver.quit();
+    }
+
+    @Test
+    public void createQuizWithOneQuestionWhichHasMultipleAnswerOptions() {
+        createQuiz.clickOnQuizzesMenu();
+        createQuiz.clickOnAddQuizButton();
+        createQuiz.enterQuizTitle("Test Quiz");
+
+        // Add question
+        createQuiz.clickOnAddQuestion();
+
+        // Enter Question
+        createQuiz.enterQuestion("Test Question");
+
+        // 2 answer
+        createQuiz.fillAnswerByInputId(1, "#1 Test Answer");
+        createQuiz.fillAnswerByInputId(2, "#2 Test Answer");
+
+        // Add other answer options and fill them out
+        createQuiz.clickOnAddOptionButton();
+        createQuiz.fillAnswerByInputId(3, "#3 Test Answer");
+
+        createQuiz.clickOnAddOptionButton();
+        createQuiz.fillAnswerByInputId(4, "#4 Test Answer");
+
+        createQuiz.clickOnAddOptionButton();
+        createQuiz.fillAnswerByInputId(5, "#5 Test Answer");
+
+        createQuiz.clickOnAddOptionButton();
+        createQuiz.fillAnswerByInputId(6, "#6 Test Answer");
+
+        // Click on both save buttons (first save the question and after that the quiz)
+        createQuiz.clickOnSaveQuestionButton();
+        createQuiz.handleAlert();
+        createQuiz.clickOnSaveQuizButton();
+        createQuiz.handleAlert();
+
+        String expectedURL = "http://localhost:3000/quiz/all";
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.urlToBe(expectedURL));
+        
+        assertEquals(expectedURL, webDriver.getCurrentUrl());
     }
 }
