@@ -34,6 +34,31 @@ public class CreateQuiz {
         quizTitleField.sendKeys(title);
     }
 
+    public void clickOnAddQuestion() {
+        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-green-800') and contains(text(), 'Add Question')]")));
+        button.click();
+    }
+
+    public void enterQuestion(String question) {
+        WebElement questionField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[contains(@id, 'question')]")));
+        questionField.sendKeys(question);
+    }
+
+    public void fillAnswerByInputId(int id, String inputValue) {
+        WebElement answerInputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("answer-" + id)));
+        answerInputField.sendKeys(inputValue);
+    }
+
+    public void clickOnAddOptionButton() {
+        WebElement addOptionButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-zinc-700') and contains(text(), '+ Add option')]")));
+        addOptionButton.click();
+    }
+
+    public void clickOnSaveQuestionButton() {
+        WebElement saveQuestionButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-green-800') and contains(text(), 'Save')]")));
+        saveQuestionButton.click();
+    }
+
     public void clickOnSaveQuizButton() {
         WebElement saveQuizButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-green-800') and contains(text(), 'Save quiz')]")));
         Actions actions = new Actions(driver);
@@ -41,7 +66,6 @@ public class CreateQuiz {
     }
 
     public void handleAlert() {
-        // Várakozás 2 másodpercig a save gomb megnyomása után
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -66,6 +90,7 @@ public class CreateQuiz {
             return false;
         }
     }
+
 
     public void clickOnEditButton() {
         WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[1]/div/button[2]")));
@@ -104,11 +129,11 @@ public class CreateQuiz {
         correctAnswerCheckbox.click();
     }
 
-    public void clickOnSaveQuestionButton() {
-        WebElement saveQuestionButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[2]/div[2]/div/div[4]/button[1]")));
-        Actions actions = new Actions(driver);
-        actions.moveToElement(saveQuestionButton).click().perform();
-    }
+    //public void clickOnSaveQuestionButton() {
+    //    WebElement saveQuestionButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[2]/div[2]/div/div[4]/button[1]")));
+    //    Actions actions = new Actions(driver);
+    //    actions.moveToElement(saveQuestionButton).click().perform();
+    //}
 
     public void clickValidQuestionButton() {
         WebElement validQuestionButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[1]/div/button")));
@@ -121,5 +146,42 @@ public class CreateQuiz {
         return Integer.parseInt(questionTimeField.getAttribute("value"));
     }
 
+
+
+    public void clickOnFirstQuizEditButton() {
+        clickOnMyQuizzes();
+        WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[1]/div[1]/button[2]")));
+        editButton.click();
+        WebElement saveQuizButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-green-800') and contains(text(), 'Save quiz')]")));
+        if (saveQuizButton.getAccessibleName().equals("Save quiz")) {
+            System.out.println("The edit is possible");
+        } else {
+            System.out.println("It's not possible to edit the quiz");
+        }
+    }
+
+    public void changeFirstQuizTitle(String newTitle) {
+        clickOnMyQuizzes();
+        WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[1]/div[1]/button[2]")));
+        editButton.click();
+        WebElement titleField = wait.until((ExpectedConditions.visibilityOfElementLocated(By.id("name"))));
+        titleField.clear();
+        titleField.sendKeys(newTitle);
+        clickOnSaveQuizButton();
+        handleAlert();
+        clickOnMyQuizzes();
+        isQuizPresent(newTitle);
+    }
+
+    public void canEditQuizWithEmptyTitle() {
+        clickOnMyQuizzes();
+        WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[1]/div/button[2]")));
+        editButton.click();
+        WebElement titleField = wait.until((ExpectedConditions.visibilityOfElementLocated(By.id("name"))));
+        titleField.clear();
+        clickOnSaveQuizButton();
+        handleAlert();
+        clickOnMyQuizzes();
+    }
 
 }
