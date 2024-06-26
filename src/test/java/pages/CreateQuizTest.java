@@ -98,9 +98,8 @@ public class CreateQuizTest {
         assertEquals(timeForGivingAnswer, actualTimeLimit);
         //webDriver.quit();
     }
-  
 
-  @Test
+    @Test
     public void testIfEditButtonWorksByClicking() {
         createQuiz.clickOnFirstQuizEditButton();
     }
