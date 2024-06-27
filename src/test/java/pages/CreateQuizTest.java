@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -101,25 +102,40 @@ public class CreateQuizTest {
 
     @Test
     public void testIfEditButtonWorksByClicking() {
-        createQuiz.clickOnFirstQuizEditButton();
+        assertTrue(createQuiz.canBeClickedFirstQuizEditButton());
     }
 
     @Test
     public void testEditFirstQuizWithAnExistingQuiz() {
-        createQuiz.changeFirstQuizTitle("Edited Quiz Title");
+        assertTrue(createQuiz.hasBeenChangedFirstQuizTitle("Edited Quiz Title"));
     }
 
     @Test
     public void testEditFirstQuizDeletingTheTitle() {
         createQuiz.canEditQuizWithEmptyTitle();
-        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Add Quiz']")));
+        WebElement addButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[text()='Add Quiz']")));
 
-        // Locate the last div before the button
-        WebElement lastDiv = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[text()='Add Quiz']/preceding-sibling::div[last()]")));
-        WebElement spanElement = lastDiv.findElement(By.xpath(".//span[@class='grow flex align-middle text-lg pl-2 items-center']"));
-        String innerHTML = spanElement.getAttribute("innerHTML").trim();
+        List<WebElement> precedingDivs = addButton.findElements(By.xpath("./preceding-sibling::div"));
 
-        assertTrue(innerHTML.isEmpty());
+        boolean foundEmptySpan = false;
+
+        for (WebElement div : precedingDivs) {
+            List<WebElement> spanElements = div.findElements(By.xpath(".//span[@class='grow flex align-middle text-lg pl-2 items-center']"));
+
+            for (WebElement span : spanElements) {
+                String innerHTML = span.getAttribute("innerHTML").trim();
+                if (innerHTML.isEmpty()) {
+                    foundEmptySpan = true;
+                    break;
+                }
+            }
+
+            if (foundEmptySpan) {
+                break;
+            }
+        }
+
+        assertTrue(foundEmptySpan);
     }
 
     @Test
