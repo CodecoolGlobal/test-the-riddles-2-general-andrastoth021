@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class CreateQuiz {
     private WebDriver driver;
@@ -92,10 +93,17 @@ public class CreateQuiz {
     }
 
 
-    public void clickOnEditButton() {
-        WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[1]/div/button[2]")));
-        Actions actions = new Actions(driver);
-        actions.moveToElement(editButton).click().perform();
+    public void clickOnEditButtonByQuizTitle(String quizTitle) {
+        List<WebElement> quizElements = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector(".flex.flex-row.border-2.m-2.p-1.rounded-md")));
+        for (WebElement quizElement : quizElements) {
+            WebElement titleElement = quizElement.findElement(By.cssSelector("span.grow"));
+            if (titleElement.getText().equals(quizTitle)) {
+                WebElement editButton = quizElement.findElement(By.xpath(".//button[contains(text(), 'Edit')]"));
+                Actions actions = new Actions(driver);
+                actions.moveToElement(editButton).click().perform();
+                break;
+            }
+        }
     }
 
     public void addQuestionButton() {
@@ -109,10 +117,11 @@ public class CreateQuiz {
         questionTitleField.sendKeys(title);
     }
 
-    public void enterQuestionTime(int seconds) {
-        WebElement questionTimeField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("-1time")));
+
+    public void enterQuestionTime(String seconds) {
+        WebElement questionTimeField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[contains(@id,'time')]")));
         questionTimeField.clear(); // Törli a mező jelenlegi tartalmát
-        questionTimeField.sendKeys(String.valueOf(seconds)); // másodpercek
+        questionTimeField.sendKeys(seconds); // másodpercek
     }
 
     public void enterAnswerOptionTitleOne(String title) {
@@ -129,21 +138,15 @@ public class CreateQuiz {
         correctAnswerCheckbox.click();
     }
 
-    //public void clickOnSaveQuestionButton() {
-    //    WebElement saveQuestionButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[2]/div[2]/div/div[4]/button[1]")));
-    //    Actions actions = new Actions(driver);
-    //    actions.moveToElement(saveQuestionButton).click().perform();
-    //}
-
     public void clickValidQuestionButton() {
         WebElement validQuestionButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[1]/div/button")));
         Actions actions = new Actions(driver);
         actions.moveToElement(validQuestionButton).click().perform();
     }
 
-    public int getQuestionTime() {
+    public String getQuestionTime() {
         WebElement questionTimeField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[contains(@id,'time')]")));
-        return Integer.parseInt(questionTimeField.getAttribute("value"));
+        return questionTimeField.getAttribute("value");
     }
 
 

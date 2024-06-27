@@ -2,6 +2,7 @@ package pages;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -71,33 +72,54 @@ public class CreateQuizTest {
         webDriver.quit();
     }
 
-    @Test
-    public void setTimeForAnswersInQuizQuestion() {
-        int timeForGivingAnswer = 11;
-        createQuiz.clickOnQuizzesMenu();
-        createQuiz.clickOnAddQuizButton();
-        String quizTitle = "Test Quiz for testing time set";
-        createQuiz.enterQuizTitle(quizTitle);
-        createQuiz.clickOnSaveQuizButton();
-        createQuiz.handleAlert();
-        createQuiz.clickOnMyQuizzes();
-        createQuiz.clickOnEditButton();
-        createQuiz.addQuestionButton();
-        createQuiz.enterQuestionTitle("testing time change in answer");
-        createQuiz.enterQuestionTime(timeForGivingAnswer);
-        createQuiz.enterAnswerOptionTitleOne("this will be good");
-        createQuiz.enterAnswerOptionTitleTwo("might be better");
-        createQuiz.selectCorrectAnswer(1);
-        createQuiz.clickOnSaveQuestionButton();
-        createQuiz.handleAlert();
-        createQuiz.clickOnSaveQuizButton();
-        createQuiz.handleAlert();
-        createQuiz.clickOnMyQuizzes();
-        createQuiz.clickOnEditButton();
-        createQuiz.clickValidQuestionButton();
-        int actualTimeLimit = createQuiz.getQuestionTime();
-        assertEquals(timeForGivingAnswer, actualTimeLimit);
-        //webDriver.quit();
+    @Nested
+    class TimeForAnswersTests {
+        private void createAndSaveQuiz(String quizTitle, String questionTitle, String questionTime) {
+            createQuiz.clickOnQuizzesMenu();
+            createQuiz.clickOnAddQuizButton();
+            createQuiz.enterQuizTitle(quizTitle);
+            createQuiz.clickOnSaveQuizButton();
+            createQuiz.handleAlert();
+            createQuiz.clickOnMyQuizzes();
+            createQuiz.clickOnEditButtonByQuizTitle(quizTitle);
+            createQuiz.addQuestionButton();
+            createQuiz.enterQuestionTitle(questionTitle);
+            createQuiz.enterQuestionTime(questionTime);
+            createQuiz.enterAnswerOptionTitleOne("this will be good");
+            createQuiz.enterAnswerOptionTitleTwo("might be better");
+            createQuiz.selectCorrectAnswer(1);
+            createQuiz.clickOnSaveQuestionButton();
+            createQuiz.handleAlert();
+            createQuiz.clickOnSaveQuizButton();
+            createQuiz.handleAlert();
+            createQuiz.clickOnMyQuizzes();
+            createQuiz.clickOnEditButtonByQuizTitle(quizTitle);
+            createQuiz.clickValidQuestionButton();
+        }
+
+        @Test
+        public void setTimeForAnswersInQuizQuestion_ValidTime() {
+            String timeForGivingAnswer = "11";
+            createAndSaveQuiz("Test Quiz for testing time set", "testing time change in answer", timeForGivingAnswer);
+            String actualTimeLimit = createQuiz.getQuestionTime();
+            assertEquals(timeForGivingAnswer, actualTimeLimit);
+        }
+
+        @Test
+        public void setTimeForAnswersInQuizQuestion_ZeroTime() {
+            String timeForGivingAnswer = "0";
+            createAndSaveQuiz("Test Quiz for testing zero time", "testing zero time", timeForGivingAnswer);
+            String actualTimeLimit = createQuiz.getQuestionTime();
+            assertEquals(timeForGivingAnswer, actualTimeLimit);
+        }
+
+        @Test
+        public void setTimeForAnswersInQuizQuestion_InvalidTime() {
+            String timeForGivingAnswer = "a";
+            createAndSaveQuiz("Test Quiz for testing invalid time", "testing invalid time", timeForGivingAnswer);
+            String actualTimeLimit = createQuiz.getQuestionTime();
+            assertEquals(timeForGivingAnswer, actualTimeLimit);
+        }
     }
 
     @Test
