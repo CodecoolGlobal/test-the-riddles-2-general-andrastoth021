@@ -139,6 +139,16 @@ public class CreateQuiz {
         actions.moveToElement(editButton).click().perform();
     }
 
+    public void clickOnPlayButton() {
+        WebElement playButton = wait.until(ExpectedConditions.elementToBeClickable((By.xpath("//*[@id=\"root\"]/div/div[2]/div/div[1]/div/button[3]"))));
+        playButton.click();
+    }
+
+    public void clickOnCreateLobbyButton() {
+        WebElement createLobbyButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/div/button")));
+        createLobbyButton.click();
+    }
+
     public void changeTitleFieldOfQuiz(String title) {
         WebElement titleField = wait.until((ExpectedConditions.visibilityOfElementLocated(By.id("name"))));
         titleField.clear();
@@ -212,5 +222,11 @@ public class CreateQuiz {
         clickOnSaveQuizButton();
         handleAlert();
         clickOnMyQuizzes();
+    }
+
+    public void createLobby() {
+        clickOnMyQuizzes();
+        clickOnPlayButton();
+        clickOnCreateLobbyButton();
     }
 }

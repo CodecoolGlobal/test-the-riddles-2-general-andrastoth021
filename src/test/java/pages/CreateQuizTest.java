@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -222,6 +223,18 @@ public class CreateQuizTest {
 
         int newQuizAmount = createQuiz.getMyQuizAmount();
         assertEquals(originalQuizAmount - 1, newQuizAmount);
+    }
+
+    @Test
+    public void checkIfLobbyCreationWorks() {
+        createQuiz.createLobby();
+
+        String expectedPrefix = "http://localhost:3000/game/lobby/";
+
+        wait.until(ExpectedConditions.urlMatches("^" + Pattern.quote(expectedPrefix) + ".*"));
+
+        String currentUrl = webDriver.getCurrentUrl();
+        assertTrue(currentUrl.startsWith(expectedPrefix));
     }
 
     @AfterEach
