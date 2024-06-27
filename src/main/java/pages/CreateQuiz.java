@@ -229,4 +229,19 @@ public class CreateQuiz {
         clickOnPlayButton();
         clickOnCreateLobbyButton();
     }
+
+    public void clickOnStartGameButton() {
+        WebElement startGame = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-pink-500') and contains(text(), 'Start')]")));
+        startGame.click();
+    }
+
+    public void clickOnResultInGame() {
+        WebElement result = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-pink-500') and contains(text(), 'Results')]")));
+        result.click();
+    }
+
+    public void clickOnNextInGame() {
+        WebElement next = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-pink-500') and contains(text(), 'Next')]")));
+        next.click();
+    }
 }
