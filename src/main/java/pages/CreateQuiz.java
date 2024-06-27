@@ -40,6 +40,19 @@ public class CreateQuiz {
         button.click();
     }
 
+    public void clickOnEditButtonByQuizTitle(String quizTitle) {
+        List<WebElement> quizElements = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector(".flex.flex-row.border-2.m-2.p-1.rounded-md")));
+        for (WebElement quizElement : quizElements) {
+            WebElement titleElement = quizElement.findElement(By.cssSelector("span.grow"));
+            if (titleElement.getText().equals(quizTitle)) {
+                WebElement editButton = quizElement.findElement(By.xpath(".//button[contains(text(), 'Edit')]"));
+                Actions actions = new Actions(driver);
+                actions.moveToElement(editButton).click().perform();
+                break;
+            }
+        }
+    }
+
     public void enterQuestion(String question) {
         WebElement questionField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[contains(@id, 'question')]")));
         questionField.sendKeys(question);
@@ -121,9 +134,15 @@ public class CreateQuiz {
     }
 
     public void clickOnEditButton() {
-        WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[1]/div/button[2]")));
+        WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div[1]/div[1]/button[2]")));
         Actions actions = new Actions(driver);
         actions.moveToElement(editButton).click().perform();
+    }
+
+    public void changeTitleFieldOfQuiz(String title) {
+        WebElement titleField = wait.until((ExpectedConditions.visibilityOfElementLocated(By.id("name"))));
+        titleField.clear();
+        titleField.sendKeys(title);
     }
 
     public void addQuestionButton() {
@@ -140,8 +159,8 @@ public class CreateQuiz {
 
     public void enterQuestionTime(String seconds) {
         WebElement questionTimeField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[contains(@id,'time')]")));
-        questionTimeField.clear(); // Törli a mező jelenlegi tartalmát
-        questionTimeField.sendKeys(seconds); // másodpercek
+        questionTimeField.clear();
+        questionTimeField.sendKeys(seconds);
     }
 
     public void enterAnswerOptionTitleOne(String title) {
@@ -171,19 +190,15 @@ public class CreateQuiz {
 
     public boolean canBeClickedFirstQuizEditButton() {
         clickOnMyQuizzes();
-        WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[1]/div[1]/button[2]")));
-        editButton.click();
+        clickOnEditButton();
         WebElement saveQuizButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-green-800') and contains(text(), 'Save quiz')]")));
         return saveQuizButton.getAccessibleName().equals("Save quiz");
     }
 
     public boolean hasBeenChangedFirstQuizTitle(String newTitle) {
         clickOnMyQuizzes();
-        WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div[1]/div[1]/button[2]")));
-        editButton.click();
-        WebElement titleField = wait.until((ExpectedConditions.visibilityOfElementLocated(By.id("name"))));
-        titleField.clear();
-        titleField.sendKeys(newTitle);
+        clickOnEditButton();
+        changeTitleFieldOfQuiz(newTitle);
         clickOnSaveQuizButton();
         handleAlert();
         clickOnMyQuizzes();
@@ -192,13 +207,10 @@ public class CreateQuiz {
 
     public void canEditQuizWithEmptyTitle() {
         clickOnMyQuizzes();
-        WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[1]/div/button[2]")));
-        editButton.click();
-        WebElement titleField = wait.until((ExpectedConditions.visibilityOfElementLocated(By.id("name"))));
-        titleField.clear();
+        clickOnEditButton();
+        changeTitleFieldOfQuiz("");
         clickOnSaveQuizButton();
         handleAlert();
         clickOnMyQuizzes();
     }
-
 }
