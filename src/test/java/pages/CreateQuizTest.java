@@ -112,9 +112,14 @@ public class CreateQuizTest {
     @Test
     public void testEditFirstQuizDeletingTheTitle() {
         createQuiz.canEditQuizWithEmptyTitle();
-        WebElement titleField = wait.until((ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(@class, 'grow flex')]"))));
+        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Add Quiz']")));
 
-        assertFalse(titleField.getText().isEmpty());
+        // Locate the last div before the button
+        WebElement lastDiv = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[text()='Add Quiz']/preceding-sibling::div[last()]")));
+        WebElement spanElement = lastDiv.findElement(By.xpath(".//span[@class='grow flex align-middle text-lg pl-2 items-center']"));
+        String innerHTML = spanElement.getAttribute("innerHTML").trim();
+
+        assertTrue(innerHTML.isEmpty());
     }
 
     @Test
