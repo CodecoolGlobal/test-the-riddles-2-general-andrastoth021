@@ -24,8 +24,8 @@ class LogInTest {
 
     @Test
     public void logInValidCredentials() {
-        logIn.fillUsernameField();
-        logIn.fillPasswordField();
+        logIn.fillUsernameFieldWithUserCredentials();
+        logIn.fillPasswordFieldWithUserCredentials();
         logIn.clickOnLogIn();
 
         String expectedURL = "http://localhost:3000/";

@@ -13,6 +13,8 @@ public class LogIn {
     private final Dotenv dotenv = Dotenv.configure().load();
     private final String username = dotenv.get("REPTILE_USER_USERNAME");
     private final String password = dotenv.get("REPTILE_USER_PASSWORD");
+    private final String usernameOfQuizMaster = dotenv.get("REPTILE_QUIZMASTER_USERNAME");
+    private final String passwordOfQuizMaster = dotenv.get("REPTILE_QUIZMASTER_PASSWORD");
 
     private WebDriver driver;
     private WebDriverWait wait;
@@ -22,14 +24,24 @@ public class LogIn {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
-    public void fillUsernameField() {
+    public void fillUsernameFieldWithUserCredentials() {
         WebElement inputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user-name")));
         inputField.sendKeys(username);
     }
 
-    public void fillPasswordField() {
+    public void fillPasswordFieldWithUserCredentials() {
         WebElement inputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
         inputField.sendKeys(password);
+    }
+
+    public void fillUsernameFieldWithQuizMasterCredentials() {
+        WebElement inputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user-name")));
+        inputField.sendKeys(usernameOfQuizMaster);
+    }
+
+    public void fillPasswordFieldWithQuizMasterCredentials() {
+        WebElement inputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
+        inputField.sendKeys(passwordOfQuizMaster);
     }
 
     public void clickOnLogIn() {
