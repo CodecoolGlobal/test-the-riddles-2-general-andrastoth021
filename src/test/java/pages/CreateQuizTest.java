@@ -184,6 +184,6 @@ public class CreateQuizTest {
 
     @AfterEach
     public void closeDriver() {
-        // webDriver.quit();
+        webDriver.quit();
     }
 }
