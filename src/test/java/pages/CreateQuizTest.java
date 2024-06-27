@@ -21,9 +21,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CreateQuizTest {
     private WebDriver webDriver;
+    private WebDriver webDriverOfUser;
+    private SignUp signUp;
     private LogIn logIn;
     private CreateQuiz createQuiz;
     private WebDriverWait wait;
+    private GameManager gameManager;
 
     @BeforeEach
     public void precondition() {
@@ -33,8 +36,8 @@ public class CreateQuizTest {
 
         // Bejelentkezés
         logIn = new LogIn(webDriver);
-        logIn.fillUsernameField();
-        logIn.fillPasswordField();
+        logIn.fillUsernameFieldWithQuizMasterCredentials();
+        logIn.fillPasswordFieldWithQuizMasterCredentials();
         logIn.clickOnLogIn();
 
         // Várakozás a főoldal betöltésére
@@ -235,6 +238,59 @@ public class CreateQuizTest {
 
         String currentUrl = webDriver.getCurrentUrl();
         assertTrue(currentUrl.startsWith(expectedPrefix));
+    }
+
+    @Test
+    public void startGameAsQuizmasterAndPlayAsUser() {
+        webDriverOfUser = new FirefoxDriver();
+        webDriverOfUser.get("http://localhost:3000/login");
+        wait = new WebDriverWait(webDriverOfUser, Duration.ofSeconds(20));
+
+        /*signUp = new SignUp(webDriverOfUser);
+        signUp.fillUsernameFieldWithUserCredentials();
+        signUp.fillEmailFieldWithUserCredentials();
+        signUp.fillPasswordFieldWithUserCredentials();
+        signUp.clickOnSignUp();*/
+        LogIn logInUser = new LogIn(webDriverOfUser);
+        logInUser.fillUsernameFieldWithUserCredentials();
+        logInUser.fillPasswordFieldWithUserCredentials();
+        logInUser.clickOnLogIn();
+
+        gameManager = new GameManager(webDriverOfUser);
+
+        // Quizmaster starts a game by going to MyQuizzes and clicking Play
+        createQuiz.clickOnMyQuizzesInNavigation();
+        createQuiz.clickOnPlayButton();
+
+        // Quizmaster creates a lobby
+        createQuiz.clickOnCreateLobbyButton();
+
+        // User joins the lobby
+        gameManager.clickOnGamesMenu();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        gameManager.clickOnGreenJoinButton();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        gameManager.clickOnPinkJoinButton();
+
+        // Quizmaster starts the game
+        createQuiz.clickOnStartGameButton();
+
+        // User clicks YES
+        gameManager.clickOnCorrectAnswer();
+
+        // Quizmaster click RESULTS (bg-pink-500) and then NEXT (pink500)
+        createQuiz.clickOnResultInGame();
+        createQuiz.clickOnNextInGame();
     }
 
     @AfterEach
