@@ -203,6 +203,27 @@ public class CreateQuizTest {
         assertEquals(expectedURL, webDriver.getCurrentUrl());
     }
 
+    @Test
+    public void deleteTopOfListExistingQuiz() {
+        createQuiz.clickOnMyQuizzesInNavigation();
+        int originalQuizAmount = createQuiz.getMyQuizAmount();
+
+        WebElement firstQuiz = createQuiz.getQuizElementByPosition(1); // First Existing Quiz
+        List<WebElement> childElement = createQuiz.getChildrenOfWebElement(firstQuiz);
+        createQuiz.clickOnDeleteQuizButton(childElement);
+        createQuiz.handleAlert();
+
+        // Wait an extra second before comparing original and new amount
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        int newQuizAmount = createQuiz.getMyQuizAmount();
+        assertEquals(originalQuizAmount - 1, newQuizAmount);
+    }
+
     @AfterEach
     public void closeDriver() {
         webDriver.quit();

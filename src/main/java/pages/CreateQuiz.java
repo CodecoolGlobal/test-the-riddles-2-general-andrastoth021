@@ -60,6 +60,34 @@ public class CreateQuiz {
         saveQuestionButton.click();
     }
 
+    public void clickOnMyQuizzesInNavigation() {
+        WebElement quizzesMenu = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(),'My Quizzes')]")));
+        quizzesMenu.click();
+    }
+
+    public int getMyQuizAmount() {
+        WebElement myQuizzes = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'grow pt-16')]")));
+        return myQuizzes.findElements(By.xpath("./*")).size() - 1;
+    }
+
+    public WebElement getQuizElementByPosition(int position) {
+        WebElement parentElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'grow pt-16')]")));
+        return parentElement.findElements(By.xpath("./*")).get(position - 1);
+    }
+
+    public List<WebElement> getChildrenOfWebElement(WebElement webElement) {
+        return webElement.findElements(By.xpath("./*"));
+    }
+
+    public void clickOnDeleteQuizButton(List<WebElement> elements) {
+        for (WebElement e : elements) {
+            if (e.getText().equals("Delete")) {
+                e.click();
+                return;
+            }
+        }
+    }
+
     public void clickOnSaveQuizButton() {
         WebElement saveQuizButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-green-800') and contains(text(), 'Save quiz')]")));
         Actions actions = new Actions(driver);
@@ -92,18 +120,10 @@ public class CreateQuiz {
         }
     }
 
-
-    public void clickOnEditButtonByQuizTitle(String quizTitle) {
-        List<WebElement> quizElements = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector(".flex.flex-row.border-2.m-2.p-1.rounded-md")));
-        for (WebElement quizElement : quizElements) {
-            WebElement titleElement = quizElement.findElement(By.cssSelector("span.grow"));
-            if (titleElement.getText().equals(quizTitle)) {
-                WebElement editButton = quizElement.findElement(By.xpath(".//button[contains(text(), 'Edit')]"));
-                Actions actions = new Actions(driver);
-                actions.moveToElement(editButton).click().perform();
-                break;
-            }
-        }
+    public void clickOnEditButton() {
+        WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div/div/div[2]/div/div[1]/div/button[2]")));
+        Actions actions = new Actions(driver);
+        actions.moveToElement(editButton).click().perform();
     }
 
     public void addQuestionButton() {
@@ -148,8 +168,6 @@ public class CreateQuiz {
         WebElement questionTimeField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[contains(@id,'time')]")));
         return questionTimeField.getAttribute("value");
     }
-
-
 
     public boolean canBeClickedFirstQuizEditButton() {
         clickOnMyQuizzes();
