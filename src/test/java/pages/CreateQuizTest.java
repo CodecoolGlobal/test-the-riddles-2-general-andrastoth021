@@ -85,56 +85,30 @@ public class CreateQuizTest {  // TODO: separate quiz creation tests from game t
         }
     }
 
-    // TODO: I recommend using private methods rather than a nested class
-    @Nested
-    class TimeForAnswersTests {
-        private void createAndSaveQuiz(String quizTitle, String questionTitle, String questionTime) {
-            createQuiz.clickOnQuizzesMenu();  // TODO: these calls could be in createQuiz() under another method?
-            createQuiz.clickOnAddQuizButton();
-            createQuiz.enterQuizTitle(quizTitle);
-            createQuiz.clickOnSaveQuizButton();
-            createQuiz.handleAlert();
-            createQuiz.clickOnMyQuizzes();
-            createQuiz.clickOnEditButtonByQuizTitle(quizTitle);
-            createQuiz.addQuestionButton();
-            createQuiz.enterQuestionTitle(questionTitle);
-            createQuiz.enterQuestionTime(questionTime);
-            createQuiz.enterAnswerOptionTitleOne("this will be good");
-            createQuiz.enterAnswerOptionTitleTwo("might be better");
-            createQuiz.selectCorrectAnswer(1);
-            createQuiz.clickOnSaveQuestionButton();
-            createQuiz.handleAlert();
-            createQuiz.clickOnSaveQuizButton();
-            createQuiz.handleAlert();
-            createQuiz.clickOnMyQuizzes();
-            createQuiz.clickOnEditButtonByQuizTitle(quizTitle);
-            createQuiz.clickValidQuestionButton();
-        }
-
-        @Test
-        public void setTimeForAnswersInQuizQuestion_ValidTime() {
-            String timeForGivingAnswer = "11";
-            createAndSaveQuiz("Test Quiz for testing time set", "testing time change in answer", timeForGivingAnswer);
-            String actualTimeLimit = createQuiz.getQuestionTime();
-            assertEquals(timeForGivingAnswer, actualTimeLimit);
-        }
-
-        @Test
-        public void setTimeForAnswersInQuizQuestion_ZeroTime() {
-            String timeForGivingAnswer = "0";
-            createAndSaveQuiz("Test Quiz for testing zero time", "testing zero time", timeForGivingAnswer);
-            String actualTimeLimit = createQuiz.getQuestionTime();
-            assertEquals(timeForGivingAnswer, actualTimeLimit);
-        }
-
-        @Test
-        public void setTimeForAnswersInQuizQuestion_InvalidTime() {
-            String timeForGivingAnswer = "a";
-            createAndSaveQuiz("Test Quiz for testing invalid time", "testing invalid time", timeForGivingAnswer);
-            String actualTimeLimit = createQuiz.getQuestionTime();
-            assertEquals(timeForGivingAnswer, actualTimeLimit);
-        }
+    @Test
+    public void setTimeForAnswersInQuizQuestion_ValidTime() {
+        String timeForGivingAnswer = "11";
+        createQuiz.createAndSaveQuiz("Test Quiz for testing time set", "testing time change in answer", timeForGivingAnswer);
+        String actualTimeLimit = createQuiz.getQuestionTime();
+        assertEquals(timeForGivingAnswer, actualTimeLimit);
     }
+
+    @Test
+    public void setTimeForAnswersInQuizQuestion_ZeroTime() {
+        String timeForGivingAnswer = "0";
+        createQuiz.createAndSaveQuiz("Test Quiz for testing zero time", "testing zero time", timeForGivingAnswer);
+        String actualTimeLimit = createQuiz.getQuestionTime();
+        assertEquals(timeForGivingAnswer, actualTimeLimit);
+    }
+
+    @Test
+    public void setTimeForAnswersInQuizQuestion_InvalidTime() {
+        String timeForGivingAnswer = "a";
+        createQuiz.createAndSaveQuiz("Test Quiz for testing invalid time", "testing invalid time", timeForGivingAnswer);
+        String actualTimeLimit = createQuiz.getQuestionTime();
+        assertEquals(timeForGivingAnswer, actualTimeLimit);
+    }
+
 
     @Test
     public void testIfEditButtonWorksByClicking() {
@@ -207,7 +181,7 @@ public class CreateQuizTest {  // TODO: separate quiz creation tests from game t
         String expectedURL = "http://localhost:3000/quiz/all";
         WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.urlToBe(expectedURL));
-        
+
         assertEquals(expectedURL, webDriver.getCurrentUrl());
     }
 
@@ -267,12 +241,15 @@ public class CreateQuizTest {  // TODO: separate quiz creation tests from game t
 
         createQuiz.clickOnStartGameButton();
 
-        gameManager.clickOnCorrectAnswer();
+        gameManager.clickOnCorrectAnswer("Yes");
 
+        Thread.sleep(1000);
         createQuiz.clickOnResultInGame();
         createQuiz.clickOnNextInGame();
 
-        // TODO: no assertion in test
+        Thread.sleep(1000);
+        String messageText = createQuiz.getFinalMessageOfGame();
+        assertEquals("Congratulations!", messageText);
     }
 
     @AfterEach

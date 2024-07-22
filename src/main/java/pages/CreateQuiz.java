@@ -244,4 +244,34 @@ public class CreateQuiz {
         WebElement next = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-pink-500') and contains(text(), 'Next')]")));
         next.click();
     }
+
+
+    public void createAndSaveQuiz(String quizTitle, String questionTitle, String questionTime) {
+        clickOnQuizzesMenu();
+        clickOnAddQuizButton();
+        enterQuizTitle(quizTitle);
+        clickOnSaveQuizButton();
+        handleAlert();
+        clickOnMyQuizzes();
+        clickOnEditButtonByQuizTitle(quizTitle);
+        addQuestionButton();
+        enterQuestionTitle(questionTitle);
+        enterQuestionTime(questionTime);
+        enterAnswerOptionTitleOne("this will be good");
+        enterAnswerOptionTitleTwo("might be better");
+        selectCorrectAnswer(1);
+        clickOnSaveQuestionButton();
+        handleAlert();
+        clickOnSaveQuizButton();
+        handleAlert();
+        clickOnMyQuizzes();
+        clickOnEditButtonByQuizTitle(quizTitle);
+        clickValidQuestionButton();
+    }
+
+    public String getFinalMessageOfGame() {
+        WebElement messageElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'pt-20 text-white text-center text-4xl')]")));
+        return messageElement.getText();
+
+    }
 }
