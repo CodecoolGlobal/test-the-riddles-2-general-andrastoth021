@@ -247,12 +247,15 @@ public class CreateQuizTest {  // TODO: separate quiz creation tests from game t
 
         createQuiz.clickOnStartGameButton();
 
-        gameManager.clickOnCorrectAnswer();
+        gameManager.clickOnCorrectAnswer("Yes");
 
+        Thread.sleep(1000);
         createQuiz.clickOnResultInGame();
         createQuiz.clickOnNextInGame();
 
-        // TODO: no assertion in test
+        Thread.sleep(1000);
+        String messageText = createQuiz.getFinalMessageOfGame();
+        assertEquals("Congratulations!", messageText);
     }
 
     @AfterEach

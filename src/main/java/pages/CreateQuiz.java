@@ -244,4 +244,9 @@ public class CreateQuiz {
         WebElement next = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-pink-500') and contains(text(), 'Next')]")));
         next.click();
     }
+
+    public String getFinalMessageOfGame() {
+        WebElement messageElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'pt-20 text-white text-center text-4xl')]")));
+        return messageElement.getText();
+    }
 }
