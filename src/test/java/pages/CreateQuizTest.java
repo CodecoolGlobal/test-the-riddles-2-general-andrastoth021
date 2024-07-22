@@ -29,30 +29,21 @@ public class CreateQuizTest {  // TODO: separate quiz creation tests from game t
     private GameManager gameManager;
 
     @BeforeEach
-    public void precondition() {
+    public void precondition() throws InterruptedException {
         webDriver = new FirefoxDriver();
         webDriver.get("http://localhost:3000/login");
         wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
 
-        // Bejelentkezés
-        // TODO: getting rid of comments :')
         logIn = new LogIn(webDriver);
         logIn.fillUsernameFieldWithQuizMasterCredentials();
         logIn.fillPasswordFieldWithQuizMasterCredentials();
         logIn.clickOnLogIn();
 
-        // Várakozás a főoldal betöltésére
-        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));  // there is a wait already, stored in a field
+        wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Quizzes')]")));
 
-        // Probléma volt. Alkalmazzuk a Thread.sleep() hívást ideiglenesen
-        try {
-            Thread.sleep(2000); // Várakozás 5 másodpercig
-        } catch (InterruptedException e) {  // TODO: no need for a try-catch block here
-            e.printStackTrace();
-        }
+        Thread.sleep(2000);
 
-        // Navigálás a Quizzes oldalra
         createQuiz = new CreateQuiz(webDriver);
         webDriver.get("http://localhost:3000");
     }
@@ -65,23 +56,20 @@ public class CreateQuizTest {  // TODO: separate quiz creation tests from game t
         createQuiz.enterQuizTitle(quizTitle);
         createQuiz.clickOnSaveQuizButton();
 
-        // Probléma volt. Kezeljük a felugró ablakot 2 másodperc várakozással. Így elmenti névvel.
         createQuiz.handleAlert();
 
-        // Kattintás a "My Quizzes" gombra
         createQuiz.clickOnMyQuizzes();
 
-        // Ellenőrizzük, hogy az új quiz létrejött-e. A tesztek során volt, hogy név nélkül mentette.
         assertTrue(createQuiz.isQuizPresent(quizTitle));
 
         webDriver.quit();
     }
 
-    // I recommend using private methods rather than a nested class
+    // TODO: I recommend using private methods rather than a nested class
     @Nested
     class TimeForAnswersTests {
         private void createAndSaveQuiz(String quizTitle, String questionTitle, String questionTime) {
-            createQuiz.clickOnQuizzesMenu();  // these calls could be in createQuiz() under another method?
+            createQuiz.clickOnQuizzesMenu();  // TODO: these calls could be in createQuiz() under another method?
             createQuiz.clickOnAddQuizButton();
             createQuiz.enterQuizTitle(quizTitle);
             createQuiz.clickOnSaveQuizButton();
@@ -172,17 +160,13 @@ public class CreateQuizTest {  // TODO: separate quiz creation tests from game t
         createQuiz.clickOnAddQuizButton();
         createQuiz.enterQuizTitle("Test Quiz");
 
-        // Add question
         createQuiz.clickOnAddQuestion();
 
-        // Enter Question
         createQuiz.enterQuestion("Test Question");
 
-        // 2 answer
         createQuiz.fillAnswerByInputId(1, "#1 Test Answer");
         createQuiz.fillAnswerByInputId(2, "#2 Test Answer");
 
-        // Add other answer options and fill them out
         createQuiz.clickOnAddOptionButton();
         createQuiz.fillAnswerByInputId(3, "#3 Test Answer");
 
@@ -194,8 +178,6 @@ public class CreateQuizTest {  // TODO: separate quiz creation tests from game t
 
         createQuiz.clickOnAddOptionButton();
         createQuiz.fillAnswerByInputId(6, "#6 Test Answer");
-
-        // Click on both save buttons (first save the question and after that the quiz)
 
         createQuiz.clickOnSaveQuestionButton();
         createQuiz.handleAlert();
@@ -210,21 +192,16 @@ public class CreateQuizTest {  // TODO: separate quiz creation tests from game t
     }
 
     @Test
-    public void deleteTopOfListExistingQuiz() {
+    public void deleteTopOfListExistingQuiz() throws InterruptedException {
         createQuiz.clickOnMyQuizzesInNavigation();
         int originalQuizAmount = createQuiz.getMyQuizAmount();
 
-        WebElement firstQuiz = createQuiz.getQuizElementByPosition(1); // First Existing Quiz
+        WebElement firstQuiz = createQuiz.getQuizElementByPosition(1);
         List<WebElement> childElement = createQuiz.getChildrenOfWebElement(firstQuiz);
         createQuiz.clickOnDeleteQuizButton(childElement);
         createQuiz.handleAlert();
 
-        // Wait an extra second before comparing original and new amount
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Thread.sleep(1000);
 
         int newQuizAmount = createQuiz.getMyQuizAmount();
         assertEquals(originalQuizAmount - 1, newQuizAmount);
@@ -243,16 +220,11 @@ public class CreateQuizTest {  // TODO: separate quiz creation tests from game t
     }
 
     @Test
-    public void startGameAsQuizmasterAndPlayAsUser() {
+    public void startGameAsQuizmasterAndPlayAsUser() throws InterruptedException {
         webDriverOfUser = new FirefoxDriver();
         webDriverOfUser.get("http://localhost:3000/login");
         wait = new WebDriverWait(webDriverOfUser, Duration.ofSeconds(20));
 
-        /*signUp = new SignUp(webDriverOfUser);
-        signUp.fillUsernameFieldWithUserCredentials();
-        signUp.fillEmailFieldWithUserCredentials();
-        signUp.fillPasswordFieldWithUserCredentials();
-        signUp.clickOnSignUp();*/
         LogIn logInUser = new LogIn(webDriverOfUser);
         logInUser.fillUsernameFieldWithUserCredentials();
         logInUser.fillPasswordFieldWithUserCredentials();
@@ -260,37 +232,23 @@ public class CreateQuizTest {  // TODO: separate quiz creation tests from game t
 
         gameManager = new GameManager(webDriverOfUser);
 
-        // Quizmaster starts a game by going to MyQuizzes and clicking Play
         createQuiz.clickOnMyQuizzesInNavigation();
         createQuiz.clickOnPlayButton();
 
-        // Quizmaster creates a lobby
         createQuiz.clickOnCreateLobbyButton();
 
-        // User joins the lobby
         gameManager.clickOnGamesMenu();
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Thread.sleep(1000);
         gameManager.clickOnGreenJoinButton();
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Thread.sleep(1000);
         gameManager.clickOnPinkJoinButton();
 
-        // Quizmaster starts the game
         createQuiz.clickOnStartGameButton();
 
-        // User clicks YES
         gameManager.clickOnCorrectAnswer();
 
-        // Quizmaster click RESULTS (bg-pink-500) and then NEXT (pink500)
         createQuiz.clickOnResultInGame();
         createQuiz.clickOnNextInGame();
 

@@ -20,8 +20,6 @@
             <artifactId>selenium-java</artifactId>
             <version>4.22.0</version>
         </dependency>
-
-        <!-- JUnit dependency -->
         <dependency>
             <groupId>io.github.cdimascio</groupId>
             <artifactId>java-dotenv</artifactId>
@@ -33,6 +31,5 @@
             <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 </project>
