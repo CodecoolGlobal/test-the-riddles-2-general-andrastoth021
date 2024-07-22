@@ -31,5 +31,11 @@
             <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.5.2</version> <!-- Check for the latest version -->
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>
