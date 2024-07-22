@@ -245,6 +245,7 @@ public class CreateQuiz {
         next.click();
     }
 
+
     public void createAndSaveQuiz(String quizTitle, String questionTitle, String questionTime) {
         clickOnQuizzesMenu();
         clickOnAddQuizButton();
@@ -266,5 +267,11 @@ public class CreateQuiz {
         clickOnMyQuizzes();
         clickOnEditButtonByQuizTitle(quizTitle);
         clickValidQuestionButton();
+    }
+
+    public String getFinalMessageOfGame() {
+        WebElement messageElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'pt-20 text-white text-center text-4xl')]")));
+        return messageElement.getText();
+
     }
 }

@@ -32,8 +32,8 @@ public class GameManager {
         pinkJoin.click();
     }
 
-    public void clickOnCorrectAnswer() {
-        WebElement yesButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(), 'Yes')]")));
-        yesButton.click();
+    public void clickOnCorrectAnswer(String answerText) {
+        WebElement answer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(), '" + answerText + "')]")));
+        answer.click();
     }
 }
