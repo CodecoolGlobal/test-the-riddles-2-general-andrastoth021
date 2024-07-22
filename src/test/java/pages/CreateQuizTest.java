@@ -1,19 +1,27 @@
 package pages;
 
+import com.opencsv.exceptions.CsvException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -48,11 +56,11 @@ public class CreateQuizTest {  // TODO: separate quiz creation tests from game t
         webDriver.get("http://localhost:3000");
     }
 
-    @Test
-    public void createQuizWithValidInputFields() {
+    @ParameterizedTest
+    @MethodSource("quizProvider")
+    public void createQuizWithValidInputFields(String quizTitle) {
         createQuiz.clickOnQuizzesMenu();
         createQuiz.clickOnAddQuizButton();
-        String quizTitle = "Test Quiz";
         createQuiz.enterQuizTitle(quizTitle);
         createQuiz.clickOnSaveQuizButton();
 
@@ -61,8 +69,20 @@ public class CreateQuizTest {  // TODO: separate quiz creation tests from game t
         createQuiz.clickOnMyQuizzes();
 
         assertTrue(createQuiz.isQuizPresent(quizTitle));
+    }
 
-        webDriver.quit();
+    static Stream<String> quizProvider() {
+        String csvFile = "src/test/resources/QuizTestDataOneQuestion.csv";
+        try (CSVReader reader = new CSVReader(new FileReader(csvFile))) {
+            List<String[]> allRecords = reader.readAll();
+
+            return allRecords.stream()
+                    .skip(1)
+                    .map(row -> row[0]);
+        } catch (IOException | CsvException e) {
+            e.printStackTrace();
+            return Stream.empty();
+        }
     }
 
     @Test

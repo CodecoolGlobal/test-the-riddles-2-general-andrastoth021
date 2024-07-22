@@ -1,0 +1,11 @@
+Quiz title,Question,Time limit (seconds),Answer option 1,Answer option 2,Answer option 3,Answer option 4,Correct 1,Correct 2,Correct 3,Correct 4
+"General Knowledge Quiz","What is the capital of France?",30,"Paris","London","Rome","Berlin","Yes","No","No","No"
+"General Knowledge Quiz","Which planet is known as the Red Planet?",30,"Earth","Mars","Jupiter","Saturn","No","Yes","No","No"
+"Math Quiz","What is 2 + 2?",20,"3","4","5","6","No","Yes","No","No"
+"Math Quiz","What is the square root of 16?",20,"2","4","6","8","No","Yes","No","No"
+"Science Quiz","What is the chemical symbol for water?",25,"H2O","CO2","O2","NaCl","Yes","No","No","No"
+"Science Quiz","What planet is known as the gas giant?",25,"Earth","Mars","Jupiter","Venus","No","No","Yes","No"
+"History Quiz","Who was the first President of the United States?",40,"George Washington","Abraham Lincoln","Thomas Jefferson","John Adams","Yes","No","No","No"
+"History Quiz","In which year did the Titanic sink?",40,"1900","1912","1920","1930","No","Yes","No","No"
+"Geography Quiz","Which is the largest ocean?",35,"Atlantic Ocean","Indian Ocean","Arctic Ocean","Pacific Ocean","No","No","No","Yes"
+"Geography Quiz","Which country is known as the Land of the Rising Sun?",35,"China","South Korea","Japan","Thailand","No","No","Yes","No"
