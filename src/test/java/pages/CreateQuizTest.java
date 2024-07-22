@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CreateQuizTest {
+public class CreateQuizTest {  // TODO: separate quiz creation tests from game tests & general refactoring
     private WebDriver webDriver;
     private WebDriver webDriverOfUser;
     private SignUp signUp;
@@ -35,19 +35,20 @@ public class CreateQuizTest {
         wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
 
         // Bejelentkezés
+        // TODO: getting rid of comments :')
         logIn = new LogIn(webDriver);
         logIn.fillUsernameFieldWithQuizMasterCredentials();
         logIn.fillPasswordFieldWithQuizMasterCredentials();
         logIn.clickOnLogIn();
 
         // Várakozás a főoldal betöltésére
-        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));  // there is a wait already, stored in a field
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Quizzes')]")));
 
         // Probléma volt. Alkalmazzuk a Thread.sleep() hívást ideiglenesen
         try {
             Thread.sleep(2000); // Várakozás 5 másodpercig
-        } catch (InterruptedException e) {
+        } catch (InterruptedException e) {  // TODO: no need for a try-catch block here
             e.printStackTrace();
         }
 
@@ -76,10 +77,11 @@ public class CreateQuizTest {
         webDriver.quit();
     }
 
+    // I recommend using private methods rather than a nested class
     @Nested
     class TimeForAnswersTests {
         private void createAndSaveQuiz(String quizTitle, String questionTitle, String questionTime) {
-            createQuiz.clickOnQuizzesMenu();
+            createQuiz.clickOnQuizzesMenu();  // these calls could be in createQuiz() under another method?
             createQuiz.clickOnAddQuizButton();
             createQuiz.enterQuizTitle(quizTitle);
             createQuiz.clickOnSaveQuizButton();
@@ -291,6 +293,8 @@ public class CreateQuizTest {
         // Quizmaster click RESULTS (bg-pink-500) and then NEXT (pink500)
         createQuiz.clickOnResultInGame();
         createQuiz.clickOnNextInGame();
+
+        // TODO: no assertion in test
     }
 
     @AfterEach
