@@ -3,7 +3,6 @@ package pages;
 import com.opencsv.exceptions.CsvException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -14,7 +13,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvValidationException;
+import pages.authentication.LogIn;
+import pages.authentication.SignUp;
 
 import java.io.FileReader;
 import java.io.IOException;
