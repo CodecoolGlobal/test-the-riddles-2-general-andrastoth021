@@ -1,6 +1,6 @@
 Quiz title,Question,Time limit (seconds),Answer option 1,Answer option 2,Answer option 3,Answer option 4,Correct 1,Correct 2,Correct 3,Correct 4
-"General Knowledge Quiz","What is the capital of France?",30,"Paris","London","Rome","Berlin","Yes","No","No","No"
-"Math Quiz","What is 2 + 2?",20,"3","4","5","6","No","Yes","No","No"
-"Science Quiz","What is the chemical symbol for water?",25,"H2O","CO2","O2","NaCl","Yes","No","No","No"
-"History Quiz","Who was the first President of the United States?",40,"George Washington","Abraham Lincoln","Thomas Jefferson","John Adams","Yes","No","No","No"
-"Geography Quiz","Which is the largest ocean?",35,"Atlantic Ocean","Indian Ocean","Arctic Ocean","Pacific Ocean","No","No","No","Yes"
+"General Knowledge Quiz","What is the capital of France?",30,1,"Paris",2,"London",3,"Rome",4,"Berlin",1
+"Math Quiz","What is 2 + 2?",20,1,"3",2,"4",3,"5",4,"6",2
+"Science Quiz","What is the chemical symbol for water?",25,1,"H2O",2,"CO2",3,"O2",4,"NaCl",1
+"History Quiz","Who was the first President of the United States?",40,1,"George Washington",2,"Abraham Lincoln",3,"Thomas Jefferson",4,"John Adams",1
+"Geography Quiz","Which is the largest ocean?",35,1,"Atlantic Ocean",2,"Indian Ocean",3,"Arctic Ocean",4,"Pacific Ocean",4
