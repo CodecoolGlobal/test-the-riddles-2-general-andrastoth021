@@ -1,0 +1,31 @@
+package pages.authentication;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+
+public abstract class AuthForm {
+    protected WebDriver driver;
+    protected WebDriverWait wait;
+
+    public AuthForm(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+    }
+
+    public void fillFieldById(String input, String id) { // TODO to be parameterized
+        WebElement inputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+        inputField.sendKeys(input);
+    }
+
+    public void clickOnButton(String buttonText) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        String xpath = String.format("//button[text()='%s']", buttonText);
+        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+        button.click();
+    }
+}
