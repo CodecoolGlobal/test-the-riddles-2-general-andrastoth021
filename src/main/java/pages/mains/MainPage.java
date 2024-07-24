@@ -2,16 +2,16 @@ package pages.mains;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import pages.BasePage;
 
-public class MainPage {
-    private WebDriver driver;
+public class MainPage extends BasePage {
     private final By gamesBy = By.xpath("//span[contains(text(),'Games')]");
     private final By quizzesBy = By.xpath("//span[contains(text(),'Quizzes')]");
     private final By myQuizzesBy = By.xpath("//span[contains(text(),'My Quizzes')]");
     private final By logoutBy = By.xpath("//span[contains(text(),'Quizzes')]");
 
-    public MainPage(WebDriver driver){
-        this.driver = driver;
+    public MainPage(WebDriver driver) {
+        super(driver);
     }
 
     public GamesPage clickOnGames() {
