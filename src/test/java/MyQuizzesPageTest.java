@@ -1,20 +1,22 @@
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.CreateQuiz;
 import pages.LogIn;
 import pages.mains.MyQuizzesPage;
 
 import java.time.Duration;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class MyQuizzesPageTest {
     private WebDriver webDriver;
     private WebDriverWait wait;
     private LogIn logIn;
+    private MyQuizzesPage myQuizzesPage;
 
     @BeforeEach
     public void precondition() throws InterruptedException {
@@ -27,21 +29,28 @@ class MyQuizzesPageTest {
         logIn.fillPasswordFieldWithQuizMasterCredentials();
         logIn.clickOnLogIn();
 
-        wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Quizzes')]")));
-
-        Thread.sleep(2000);
-
         webDriver.get("http://localhost:3000/quiz/my");
+        myQuizzesPage = new MyQuizzesPage(webDriver);
     }
 
     @Test
-    public void testMyQuizzesPageMethods() throws InterruptedException {
-        MyQuizzesPage myQuizzesPage = new MyQuizzesPage(webDriver);
+    public void testAddingNewQuiz() throws InterruptedException {
+        // TODO
+    }
 
-        myQuizzesPage.clickOnEditNthQuiz(2);
+    @Test
+    public void testEditingExistingQuiz() throws InterruptedException {
+        // TODO
+    }
+
+    @Test
+    public void testDeletingExistingQuiz() throws InterruptedException {
+        myQuizzesPage.clickOnDeleteNthQuiz(1);
         myQuizzesPage.handleAlert();
+    }
 
-        Thread.sleep(2000);
+    @AfterEach
+    public void postcondition() {
+        webDriver.quit();
     }
 }
