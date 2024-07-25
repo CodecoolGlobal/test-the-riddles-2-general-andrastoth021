@@ -6,12 +6,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.BasePage;
 
-import java.time.Duration;
-
-public class GamesPage extends BasePage {
+public class GameListPage extends BasePage {
     private final By joinBy = By.xpath(".//button[contains(@class, 'bg-green-400') and contains(text(), 'Join')]");
 
-    public GamesPage(WebDriver driver) {
+    public GameListPage(WebDriver driver) {
         super(driver);
     }
 

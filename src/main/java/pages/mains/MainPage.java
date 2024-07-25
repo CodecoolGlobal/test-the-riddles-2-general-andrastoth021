@@ -14,9 +14,9 @@ public class MainPage extends BasePage {
         super(driver);
     }
 
-    public GamesPage clickOnGames() {
+    public GameListPage clickOnGames() {
         driver.findElement(gamesBy).click();
-        return new GamesPage(driver);
+        return new GameListPage(driver);
     }
 
     public QuizzesPage clickOnQuizzes() {
