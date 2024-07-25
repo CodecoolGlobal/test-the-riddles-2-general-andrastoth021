@@ -7,11 +7,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.BasePage;
 
 public class LobbyPage extends BasePage {
-
     private final By createGameLobby = By.xpath("//button[contains(@class, 'bg-pink-500') and contains(text(), 'Create game lobby')]");
     private final By startGame = By.xpath("//button[contains(@class, 'bg-pink-500') and contains(text(), 'Start')]");
     private final By resultInGame = By.xpath("//button[contains(@class, 'bg-pink-500') and contains(text(), 'Results')]");
     private final By nextInGame = By.xpath("//button[contains(@class, 'bg-pink-500') and contains(text(), 'Next')]");
+    private final String SUCCESSFUL_END_OF_GAME_MESSAGE = "Congratulations!";
+
     public LobbyPage(WebDriver driver) {
         super(driver);
     }
@@ -36,4 +37,12 @@ public class LobbyPage extends BasePage {
         createNextInGameButton.click();
     }
 
+    public boolean validateSuccessfulEndOfGame() {
+        return getFinalMessageOfGame().equals(SUCCESSFUL_END_OF_GAME_MESSAGE);
+    }
+
+    private String getFinalMessageOfGame() {
+        WebElement messageElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@class, 'pt-20 text-white text-center text-4xl')]")));
+        return messageElement.getText();
+    }
 }

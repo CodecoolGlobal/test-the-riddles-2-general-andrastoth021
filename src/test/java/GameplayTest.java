@@ -1,10 +1,15 @@
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import pages.authentication.LogIn;
+import pages.lobby.LobbyPage;
+import pages.mains.GameListPage;
+import pages.mains.MyQuizzesPage;
+import pages.player.GamePage;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameplayTest {
     private WebDriver driverQuizMaster;
@@ -24,8 +29,8 @@ class GameplayTest {
         logInPage.clickOnLogIn();
 
         logInPage = new LogIn(driverPlayer);
-        logInPage.fillUsernameFieldWithQuizMasterCredentials();
-        logInPage.fillPasswordFieldWithQuizMasterCredentials();
+        logInPage.fillUsernameFieldWithUserCredentials();
+        logInPage.fillPasswordFieldWithUserCredentials();
         logInPage.clickOnLogIn();
 
         driverQuizMaster.get("http://localhost:3000/quiz/my");
@@ -33,39 +38,44 @@ class GameplayTest {
     }
 
     @Test
-    public void startGameAsQuizmasterAndPlayAsUser() throws InterruptedException {
+    public void testGamePlayWithAOneQuestionQuiz() throws InterruptedException {
         // TODO: as merge is complete, and LobbyPage is present, remove the comment and the test will run.
-        /*MyQuizzesPage myQuizzesPage = new MyQuizzesPage(driverQuizMaster);
+        MyQuizzesPage myQuizzesPage = new MyQuizzesPage(driverQuizMaster);
         myQuizzesPage.clickOnPlayNthQuiz(1);
+        Thread.sleep(1000);
 
         LobbyPage lobbyPage = new LobbyPage(driverQuizMaster);
         lobbyPage.clickOnCreateGameLobby();
+        Thread.sleep(2000);
 
-        GamesPage gamesPage = new GamesPage(driverPlayer);
-        gamesPage.clickOnJoinNthQuiz(1);
+        driverPlayer.get("http://localhost:3000/gamelist");
+        GameListPage gameListPage = new GameListPage(driverPlayer);
+        gameListPage.clickOnJoinNthQuiz(1);
+        Thread.sleep(1000);
 
         GamePage gamePage = new GamePage(driverPlayer);
-        Thread.sleep(1000);
-        gamePage.clickOnGreenJoinButton();
-        Thread.sleep(1000);
         gamePage.clickOnPinkJoinButton();
+        Thread.sleep(1000);
 
         lobbyPage.clickOnStartGameButton();
+        Thread.sleep(1000);
 
         gamePage.clickOnCorrectAnswer("Yes");
-
         Thread.sleep(1000);
+
         lobbyPage.clickOnResultInGame();
+        Thread.sleep(1000);
         lobbyPage.clickOnNextInGame();
+        Thread.sleep(1000);
 
         Thread.sleep(1000);
-        String messageText = lobbyPage.getFinalMessageOfGame();
-        assertEquals("Congratulations!", messageText);*/
+        assertTrue(lobbyPage.validateSuccessfulEndOfGame());
     }
 
-    /*@AfterEach
-    public void postcondition() {
+    @AfterEach
+    public void postcondition() throws InterruptedException {
+        Thread.sleep(1000);
         driverQuizMaster.quit();
         driverPlayer.quit();
-    }*/
+    }
 }
