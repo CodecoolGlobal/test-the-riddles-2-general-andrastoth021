@@ -3,6 +3,7 @@ package pages.quiz;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import pages.BasePage;
+import pages.authentication.LogInPage;
 
 public class MainPage extends BasePage {
     private final By gamesBy = By.xpath("//span[contains(text(),'Games')]");
@@ -27,10 +28,5 @@ public class MainPage extends BasePage {
     public MyQuizzesPage clickOnMyQuizzes() {
         driver.findElement(myQuizzesBy).click();
         return new MyQuizzesPage(driver);
-    }
-
-    public void clickOnLogout() {
-        driver.findElement(logoutBy).click();
-        // return new LogInPage(driver);
     }
 }

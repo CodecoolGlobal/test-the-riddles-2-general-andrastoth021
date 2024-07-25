@@ -14,7 +14,7 @@ public abstract class AuthForm extends BasePage {
         super(driver);
     }
 
-    public void fillFieldById(String input, String id) { // TODO to be parameterized
+    public void fillFieldById(String input, String id) {
         WebElement inputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
         inputField.sendKeys(input);
     }

@@ -59,19 +59,9 @@ public class QuizFormPage extends BasePage {
 
     }
 
-    public void clickOnDeleteQuestionButton() {
-        WebElement deleteQuestionButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-zinc-950') and contains(text(), 'Delete')]")));
-        deleteQuestionButton.click();
-    }
-
     public void clickOnSaveQuizButton() {
         WebElement saveQuizButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-green-800') and contains(text(), 'Save quiz')]")));
         saveQuizButton.click();
-    }
-
-    public void clickOnDeleteQuizButton() {
-        WebElement deleteQuizButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-zinc-950') and contains(text(), 'Delete quiz')]")));
-        deleteQuizButton.click();
     }
 
     public void handleAlert() {

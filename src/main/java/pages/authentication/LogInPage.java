@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-// TODO only the methods from AuthForm to be used in the future
 // TODO below methods remains till all codes refactored where currently used
 
 public class LogInPage extends AuthForm {

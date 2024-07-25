@@ -15,8 +15,6 @@ class LogInPageTest extends BaseTest {
     private final Dotenv dotenv = Dotenv.configure().load();
     private final String usernameOfQuizMaster = dotenv.get("REPTILE_QUIZMASTER_USERNAME");
     private final String passwordOfQuizMaster = dotenv.get("REPTILE_QUIZMASTER_PASSWORD");
-    // private final String username = dotenv.get("REPTILE_USER_USERNAME");
-    // private final String password = dotenv.get("REPTILE_USER_PASSWORD");
     private LogInPage logInPage;
 
     @BeforeEach

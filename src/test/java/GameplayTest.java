@@ -38,7 +38,6 @@ class GameplayTest extends BaseTest {
 
     @Test
     public void testGamePlayWithAOneQuestionQuiz() throws InterruptedException {
-        // TODO: as merge is complete, and LobbyPage is present, remove the comment and the test will run.
         MyQuizzesPage myQuizzesPage = new MyQuizzesPage(driverQuizMaster);
         myQuizzesPage.clickOnPlayNthQuiz(1);
         Thread.sleep(1000);

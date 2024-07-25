@@ -1,6 +1,5 @@
 package pages.quiz;
 
-//import com.sun.org.apache.bcel.internal.generic.PUSH;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
