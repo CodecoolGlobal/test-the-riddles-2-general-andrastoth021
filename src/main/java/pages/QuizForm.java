@@ -73,4 +73,9 @@ public class QuizForm extends BasePage {
         WebElement deleteQuizButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-zinc-950') and contains(text(), 'Delete quiz')]")));
         deleteQuizButton.click();
     }
+
+    public void handleAlert() {
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        alert.accept();
+    }
 }
