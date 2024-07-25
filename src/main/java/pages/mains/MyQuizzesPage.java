@@ -1,10 +1,12 @@
 package pages.mains;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.BasePage;
+import pages.QuizForm;
 
 public class MyQuizzesPage extends BasePage {
     private final By addQuizBy = By.xpath("//button[contains(@class, 'bg-green-400') and contains(text(), 'Add Quiz')]");
@@ -16,10 +18,10 @@ public class MyQuizzesPage extends BasePage {
         super(driver);
     }
 
-    public void clickOnAddQuiz() {
+    public QuizForm clickOnAddQuiz() {
         WebElement addQuizButton = wait.until(ExpectedConditions.visibilityOfElementLocated(addQuizBy));
         addQuizButton.click();
-        // return new QuizformPage();
+        return new QuizForm(driver);
     }
 
     private WebElement getNthQuiz(int n) {
@@ -32,14 +34,28 @@ public class MyQuizzesPage extends BasePage {
         deleteButton.click();
     }
 
-    public void clickOnEditNthQuiz(int n) {
+    public QuizForm clickOnEditNthQuiz(int n) {
         WebElement editButton = getNthQuiz(n).findElement(editBy);
         editButton.click();
-        // return new QuizformPage();
+        return new QuizForm(driver);
     }
 
     public void clickOnPlayNthQuiz(int n) {
         WebElement playButton = getNthQuiz(n).findElement(playBy);
         playButton.click();
+    }
+
+    public boolean isQuizPresent(String title) {
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), '" + title + "')]")));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void handleAlert() {
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        alert.accept();
     }
 }
