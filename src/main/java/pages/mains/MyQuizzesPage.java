@@ -49,6 +49,15 @@ public class MyQuizzesPage {
         playButton.click();
     }
 
+    public boolean isQuizPresent(String title) {
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), '" + title + "')]")));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public void handleAlert() {
         Alert alert = wait.until(ExpectedConditions.alertIsPresent());
         alert.accept();
