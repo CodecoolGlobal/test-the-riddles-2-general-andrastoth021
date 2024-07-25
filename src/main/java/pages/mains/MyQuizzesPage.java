@@ -1,5 +1,6 @@
 package pages.mains;
 
+//import com.sun.org.apache.bcel.internal.generic.PUSH;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -29,13 +30,22 @@ public class MyQuizzesPage extends BasePage {
         return myQuizzes.findElements(By.tagName("div")).get(n - 1);
     }
 
+    public String getQuizTitle(int n) {
+        WebElement myQuizzes = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(@class, 'grow pt-16')]")));
+        WebElement quizElement = myQuizzes.findElements(By.tagName("div")).get(n - 1);
+        return quizElement.findElement(By.tagName("span")).getText();
+    }
+
     public void clickOnDeleteNthQuiz(int n) {
         WebElement deleteButton = getNthQuiz(n).findElement(deleteBy);
         deleteButton.click();
     }
 
     public QuizForm clickOnEditNthQuiz(int n) {
-        WebElement editButton = getNthQuiz(n).findElement(editBy);
+        WebElement quizElement = getNthQuiz(n);
+        System.out.println("Found quiz element: " + quizElement);
+        WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(quizElement.findElement(editBy)));
+        System.out.println("Found edit button: " + editButton);
         editButton.click();
         return new QuizForm(driver);
     }
