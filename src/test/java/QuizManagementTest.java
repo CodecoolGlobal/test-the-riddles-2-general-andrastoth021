@@ -1,5 +1,3 @@
-package pages;
-
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,24 +5,23 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.authentication.LogIn;
-import pages.mains.MainPage;
-import pages.mains.MyQuizzesPage;
-import pages.mains.QuizzesPage;
+import pages.authentication.LogInPage;
+import pages.quiz.MainPage;
+import pages.quiz.MyQuizzesPage;
+import pages.quiz.QuizFormPage;
+import pages.quiz.QuizzesPage;
 
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class QuizManagementTest {
-    private WebDriver webDriver;
-    private LogIn logIn;
-    private QuizForm quizForm;
+public class QuizManagementTest extends BaseTest {
+    private LogInPage logInPage;
+    private QuizFormPage quizFormPage;
     private MainPage mainPage;
     private MyQuizzesPage myQuizzesPage;
     private QuizzesPage quizzesPage;
@@ -36,22 +33,22 @@ public class QuizManagementTest {
 
     @BeforeEach
     public void precondition() throws InterruptedException {
-        webDriver = new FirefoxDriver();
-        webDriver.get("http://localhost:3000/login");
-        wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
+        driverQuizMaster = new FirefoxDriver();
+        driverQuizMaster.get("http://localhost:3000/login");
+        wait = new WebDriverWait(driverQuizMaster, Duration.ofSeconds(20));
 
-        logIn = new LogIn(webDriver);
-        logIn.fillFieldById(username, "user-name");
-        logIn.fillFieldById(password, "password");
-        logIn.clickOnButton("LOGIN");
+        logInPage = new LogInPage(driverQuizMaster);
+        logInPage.fillFieldById(username, "user-name");
+        logInPage.fillFieldById(password, "password");
+        logInPage.clickOnButton("LOGIN");
 
-        wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
+        wait = new WebDriverWait(driverQuizMaster, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Quizzes')]")));
 
-        quizForm = new QuizForm(webDriver);
-        mainPage = new MainPage(webDriver);
-        myQuizzesPage = new MyQuizzesPage(webDriver);
-        quizzesPage = new QuizzesPage(webDriver);
+        quizFormPage = new QuizFormPage(driverQuizMaster);
+        mainPage = new MainPage(driverQuizMaster);
+        myQuizzesPage = new MyQuizzesPage(driverQuizMaster);
+        quizzesPage = new QuizzesPage(driverQuizMaster);
 
         Thread.sleep(2000);
     }
@@ -65,22 +62,22 @@ public class QuizManagementTest {
 
         mainPage.clickOnQuizzes();
         myQuizzesPage.clickOnAddQuiz();
-        quizForm.createAndSaveQuiz(quizTitle, question, timeLimit, idAnswerOption1,answerOption1, idAnswerOption2, answerOption2, idAnswerOption3, answerOption3, idAnswerOption4, answerOption4, correctID);
+        quizFormPage.createAndSaveQuiz(quizTitle, question, timeLimit, idAnswerOption1,answerOption1, idAnswerOption2, answerOption2, idAnswerOption3, answerOption3, idAnswerOption4, answerOption4, correctID);
 
         mainPage.clickOnMyQuizzes();
         assertTrue(myQuizzesPage.isQuizPresent(quizTitle));
     }
 
     @Test
-    public void testEditingExistingQuiz() throws InterruptedException {
+    public void testEditingExistingQuiz() {
         mainPage.clickOnMyQuizzes();
 
         myQuizzesPage.clickOnEditNthQuiz(1);
         String newQuizTitle = "Edited Quiz Title";
-        quizForm.fillQuizTitleField(newQuizTitle);
+        quizFormPage.fillQuizTitleField(newQuizTitle);
 
         int questionNumber = 1;
-        quizForm.clickOnNthQuestion(questionNumber);
+        quizFormPage.clickOnNthQuestion(questionNumber);
 
         String newQuestion = "Edited Question?";
         int newTimeLimit = 30;
@@ -94,25 +91,25 @@ public class QuizManagementTest {
         String newAnswerOption4 = "Edited Answer 4";
         int newCorrectID = 1;
 
-        quizForm.editAndSaveQuiz(newQuizTitle, newQuestion, newTimeLimit, newIdAnswerOption1, newAnswerOption1, newIdAnswerOption2, newAnswerOption2, newIdAnswerOption3, newAnswerOption3, newIdAnswerOption4, newAnswerOption4, newCorrectID);
+        quizFormPage.editAndSaveQuiz(newQuizTitle, newQuestion, newTimeLimit, newIdAnswerOption1, newAnswerOption1, newIdAnswerOption2, newAnswerOption2, newIdAnswerOption3, newAnswerOption3, newIdAnswerOption4, newAnswerOption4, newCorrectID);
 
         mainPage.clickOnMyQuizzes();
         assertTrue(myQuizzesPage.isQuizPresent(newQuizTitle), "The edited quiz title should be present.");
     }
 
     @Test
-    public void testAddingNewQuizOnlyWithATitle() throws InterruptedException {
+    public void testAddingNewQuizOnlyWithATitle() {
         mainPage.clickOnQuizzes();
         quizzesPage.clickOnAddQuiz();
-        quizForm.fillQuizTitleField("Test");
-        quizForm.clickOnSaveQuizButton();
-        quizForm.handleAlert();
+        quizFormPage.fillQuizTitleField("Test");
+        quizFormPage.clickOnSaveQuizButton();
+        quizFormPage.handleAlert();
         mainPage.clickOnMyQuizzes();
         assertTrue(myQuizzesPage.isQuizPresent("Test"));
     }
 
     @Test
-    public void testDeletingExistingQuiz() throws InterruptedException {
+    public void testDeletingExistingQuiz() {
 
         mainPage.clickOnMyQuizzes();
 
@@ -127,6 +124,6 @@ public class QuizManagementTest {
 
     @AfterEach
     public void postCondition() {
-        webDriver.quit();
+        driverQuizMaster.quit();
     }
 }

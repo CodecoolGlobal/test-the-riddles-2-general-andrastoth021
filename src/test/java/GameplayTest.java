@@ -3,32 +3,31 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import pages.authentication.LogIn;
-import pages.lobby.LobbyPage;
-import pages.mains.GameListPage;
-import pages.mains.MyQuizzesPage;
-import pages.player.GamePage;
+import pages.authentication.LogInPage;
+import pages.gameplay.LobbyPage;
+import pages.quiz.GameListPage;
+import pages.quiz.MyQuizzesPage;
+import pages.gameplay.GamePage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class GameplayTest {
-    private WebDriver driverQuizMaster;
+class GameplayTest extends BaseTest {
     private WebDriver driverPlayer;
 
     @BeforeEach
-    public void precondition() throws InterruptedException {
+    public void precondition() {
         driverQuizMaster = new FirefoxDriver();
         driverPlayer = new FirefoxDriver();
 
         driverQuizMaster.get("http://localhost:3000/login");
         driverPlayer.get("http://localhost:3000/login");
 
-        LogIn logInPage = new LogIn(driverQuizMaster);
+        LogInPage logInPage = new LogInPage(driverQuizMaster);
         logInPage.fillUsernameFieldWithQuizMasterCredentials();
         logInPage.fillPasswordFieldWithQuizMasterCredentials();
         logInPage.clickOnLogIn();
 
-        logInPage = new LogIn(driverPlayer);
+        logInPage = new LogInPage(driverPlayer);
         logInPage.fillUsernameFieldWithUserCredentials();
         logInPage.fillPasswordFieldWithUserCredentials();
         logInPage.clickOnLogIn();
@@ -39,7 +38,6 @@ class GameplayTest {
 
     @Test
     public void testGamePlayWithAOneQuestionQuiz() throws InterruptedException {
-        // TODO: as merge is complete, and LobbyPage is present, remove the comment and the test will run.
         MyQuizzesPage myQuizzesPage = new MyQuizzesPage(driverQuizMaster);
         myQuizzesPage.clickOnPlayNthQuiz(1);
         Thread.sleep(1000);

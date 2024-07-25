@@ -1,13 +1,11 @@
-package pages.mains;
+package pages.quiz;
 
-//import com.sun.org.apache.bcel.internal.generic.PUSH;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.BasePage;
-import pages.QuizForm;
 
 public class MyQuizzesPage extends BasePage {
     private final By addQuizBy = By.xpath("//button[contains(@class, 'bg-green-400') and contains(text(), 'Add Quiz')]");
@@ -19,10 +17,10 @@ public class MyQuizzesPage extends BasePage {
         super(driver);
     }
 
-    public QuizForm clickOnAddQuiz() {
+    public QuizFormPage clickOnAddQuiz() {
         WebElement addQuizButton = wait.until(ExpectedConditions.visibilityOfElementLocated(addQuizBy));
         addQuizButton.click();
-        return new QuizForm(driver);
+        return new QuizFormPage(driver);
     }
 
     private WebElement getNthQuiz(int n) {
@@ -41,13 +39,13 @@ public class MyQuizzesPage extends BasePage {
         deleteButton.click();
     }
 
-    public QuizForm clickOnEditNthQuiz(int n) {
+    public QuizFormPage clickOnEditNthQuiz(int n) {
         WebElement quizElement = getNthQuiz(n);
         System.out.println("Found quiz element: " + quizElement);
         WebElement editButton = wait.until(ExpectedConditions.elementToBeClickable(quizElement.findElement(editBy)));
         System.out.println("Found edit button: " + editButton);
         editButton.click();
-        return new QuizForm(driver);
+        return new QuizFormPage(driver);
     }
 
     public void clickOnPlayNthQuiz(int n) {

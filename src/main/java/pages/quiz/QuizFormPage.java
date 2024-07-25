@@ -1,13 +1,14 @@
-package pages;
+package pages.quiz;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.Alert;
+import pages.BasePage;
 
-public class QuizForm extends BasePage {
-    public QuizForm(WebDriver driver) {
+public class QuizFormPage extends BasePage {
+    public QuizFormPage(WebDriver driver) {
         super(driver);
     }
 
@@ -58,19 +59,9 @@ public class QuizForm extends BasePage {
 
     }
 
-    public void clickOnDeleteQuestionButton() {
-        WebElement deleteQuestionButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-zinc-950') and contains(text(), 'Delete')]")));
-        deleteQuestionButton.click();
-    }
-
     public void clickOnSaveQuizButton() {
         WebElement saveQuizButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-green-800') and contains(text(), 'Save quiz')]")));
         saveQuizButton.click();
-    }
-
-    public void clickOnDeleteQuizButton() {
-        WebElement deleteQuizButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'bg-zinc-950') and contains(text(), 'Delete quiz')]")));
-        deleteQuizButton.click();
     }
 
     public void handleAlert() {
