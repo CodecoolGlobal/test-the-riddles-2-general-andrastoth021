@@ -1,7 +1,6 @@
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -11,19 +10,18 @@ import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SignUpPageTest {
+public class SignUpPageTest extends BaseTest {
     private final Dotenv dotenv = Dotenv.configure().load();
     private final String username = dotenv.get("REPTILE_QUIZMASTER_USERNAME");
     private final String email = dotenv.get("REPTILE_QUIZMASTER_EMAIL");
     private final String password = dotenv.get("REPTILE_QUIZMASTER_PASSWORD");
-    private WebDriver webDriver;
     private SignUpPage signUpPage;
 
     @BeforeEach
     public void precondition() {
-        webDriver = new FirefoxDriver();
-        webDriver.get("http://localhost:3000/register");
-        signUpPage = new SignUpPage(webDriver);
+        driverQuizMaster = new FirefoxDriver();
+        driverQuizMaster.get("http://localhost:3000/register");
+        signUpPage = new SignUpPage(driverQuizMaster);
     }
 
     @Test
@@ -34,9 +32,9 @@ public class SignUpPageTest {
         signUpPage.clickOnButton("SIGN UP");
 
         String expectedURL = "http://localhost:3000/login";
-        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driverQuizMaster, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.urlToBe(expectedURL));
 
-        assertEquals(expectedURL, webDriver.getCurrentUrl());
+        assertEquals(expectedURL, driverQuizMaster.getCurrentUrl());
     }
 }

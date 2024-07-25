@@ -1,7 +1,6 @@
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -12,25 +11,24 @@ import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class MainPageTest {
-    private WebDriver webDriver;
+class MainPageTest extends BaseTest {
     private WebDriverWait wait;
     private LogInPage logInPage;
     private MainPage mainPage;
 
     @BeforeEach
-    public void precondition() throws InterruptedException {
-        webDriver = new FirefoxDriver();
-        webDriver.get("http://localhost:3000/login");
-        wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
+    public void precondition() {
+        driverQuizMaster = new FirefoxDriver();
+        driverQuizMaster.get("http://localhost:3000/login");
+        wait = new WebDriverWait(driverQuizMaster, Duration.ofSeconds(20));
 
-        logInPage = new LogInPage(webDriver);
+        logInPage = new LogInPage(driverQuizMaster);
         logInPage.fillUsernameFieldWithQuizMasterCredentials();
         logInPage.fillPasswordFieldWithQuizMasterCredentials();
         logInPage.clickOnLogIn();
 
-        webDriver.get("http://localhost:3000/");
-        mainPage = new MainPage(webDriver);
+        driverQuizMaster.get("http://localhost:3000/");
+        mainPage = new MainPage(driverQuizMaster);
     }
 
     @Test
@@ -40,7 +38,7 @@ class MainPageTest {
         String expectedURL = "http://localhost:3000/gamelist";
         wait.until(ExpectedConditions.urlToBe(expectedURL));
 
-        assertEquals(expectedURL, webDriver.getCurrentUrl());
+        assertEquals(expectedURL, driverQuizMaster.getCurrentUrl());
     }
 
     @Test
@@ -50,7 +48,7 @@ class MainPageTest {
         String expectedURL = "http://localhost:3000/quiz/all";
         wait.until(ExpectedConditions.urlToBe(expectedURL));
 
-        assertEquals(expectedURL, webDriver.getCurrentUrl());
+        assertEquals(expectedURL, driverQuizMaster.getCurrentUrl());
     }
 
     @Test
@@ -60,11 +58,11 @@ class MainPageTest {
         String expectedURL = "http://localhost:3000/quiz/my";
         wait.until(ExpectedConditions.urlToBe(expectedURL));
 
-        assertEquals(expectedURL, webDriver.getCurrentUrl());
+        assertEquals(expectedURL, driverQuizMaster.getCurrentUrl());
     }
 
     @AfterEach
     public void postcondition() {
-        webDriver.quit();
+        driverQuizMaster.quit();
     }
 }

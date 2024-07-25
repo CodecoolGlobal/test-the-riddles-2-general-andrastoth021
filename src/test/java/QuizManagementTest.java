@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -20,8 +19,7 @@ import java.time.Duration;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class QuizManagementTest {
-    private WebDriver webDriver;
+public class QuizManagementTest extends BaseTest {
     private LogInPage logInPage;
     private QuizFormPage quizFormPage;
     private MainPage mainPage;
@@ -35,22 +33,22 @@ public class QuizManagementTest {
 
     @BeforeEach
     public void precondition() throws InterruptedException {
-        webDriver = new FirefoxDriver();
-        webDriver.get("http://localhost:3000/login");
-        wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
+        driverQuizMaster = new FirefoxDriver();
+        driverQuizMaster.get("http://localhost:3000/login");
+        wait = new WebDriverWait(driverQuizMaster, Duration.ofSeconds(20));
 
-        logInPage = new LogInPage(webDriver);
+        logInPage = new LogInPage(driverQuizMaster);
         logInPage.fillFieldById(username, "user-name");
         logInPage.fillFieldById(password, "password");
         logInPage.clickOnButton("LOGIN");
 
-        wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
+        wait = new WebDriverWait(driverQuizMaster, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Quizzes')]")));
 
-        quizFormPage = new QuizFormPage(webDriver);
-        mainPage = new MainPage(webDriver);
-        myQuizzesPage = new MyQuizzesPage(webDriver);
-        quizzesPage = new QuizzesPage(webDriver);
+        quizFormPage = new QuizFormPage(driverQuizMaster);
+        mainPage = new MainPage(driverQuizMaster);
+        myQuizzesPage = new MyQuizzesPage(driverQuizMaster);
+        quizzesPage = new QuizzesPage(driverQuizMaster);
 
         Thread.sleep(2000);
     }
@@ -71,7 +69,7 @@ public class QuizManagementTest {
     }
 
     @Test
-    public void testEditingExistingQuiz() throws InterruptedException {
+    public void testEditingExistingQuiz() {
         mainPage.clickOnMyQuizzes();
 
         myQuizzesPage.clickOnEditNthQuiz(1);
@@ -100,7 +98,7 @@ public class QuizManagementTest {
     }
 
     @Test
-    public void testAddingNewQuizOnlyWithATitle() throws InterruptedException {
+    public void testAddingNewQuizOnlyWithATitle() {
         mainPage.clickOnQuizzes();
         quizzesPage.clickOnAddQuiz();
         quizFormPage.fillQuizTitleField("Test");
@@ -111,7 +109,7 @@ public class QuizManagementTest {
     }
 
     @Test
-    public void testDeletingExistingQuiz() throws InterruptedException {
+    public void testDeletingExistingQuiz() {
 
         mainPage.clickOnMyQuizzes();
 
@@ -126,6 +124,6 @@ public class QuizManagementTest {
 
     @AfterEach
     public void postCondition() {
-        webDriver.quit();
+        driverQuizMaster.quit();
     }
 }

@@ -11,12 +11,11 @@ import pages.gameplay.GamePage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class GameplayTest {
-    private WebDriver driverQuizMaster;
+class GameplayTest extends BaseTest {
     private WebDriver driverPlayer;
 
     @BeforeEach
-    public void precondition() throws InterruptedException {
+    public void precondition() {
         driverQuizMaster = new FirefoxDriver();
         driverPlayer = new FirefoxDriver();
 
