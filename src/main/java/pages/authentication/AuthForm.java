@@ -5,16 +5,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.BasePage;
 
 import java.time.Duration;
 
-public abstract class AuthForm {
-    protected WebDriver driver;
-    protected WebDriverWait wait;
-
+public abstract class AuthForm extends BasePage {
     public AuthForm(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        super(driver);
     }
 
     public void fillFieldById(String input, String id) { // TODO to be parameterized

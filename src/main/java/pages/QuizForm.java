@@ -12,13 +12,9 @@ import org.openqa.selenium.NoAlertPresentException;
 
 import java.time.Duration;
 
-public class QuizForm {
-    private WebDriver driver;
-    private WebDriverWait wait;
-
+public class QuizForm extends BasePage {
     public QuizForm(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        super(driver);
     }
 
     public void fillQuizTitleField(String title) {
@@ -79,10 +75,7 @@ public class QuizForm {
     }
 
     public void handleAlert() {
-        try {
-            Alert alert = driver.switchTo().alert();
-            alert.accept();
-        } catch (NoAlertPresentException e) {
-        }
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        alert.accept();
     }
 }
