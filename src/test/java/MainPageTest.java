@@ -5,8 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.authentication.LogIn;
-import pages.mains.MainPage;
+import pages.authentication.LogInPage;
+import pages.quiz.MainPage;
 
 import java.time.Duration;
 
@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class MainPageTest {
     private WebDriver webDriver;
     private WebDriverWait wait;
-    private LogIn logIn;
+    private LogInPage logInPage;
     private MainPage mainPage;
 
     @BeforeEach
@@ -24,10 +24,10 @@ class MainPageTest {
         webDriver.get("http://localhost:3000/login");
         wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
 
-        logIn = new LogIn(webDriver);
-        logIn.fillUsernameFieldWithQuizMasterCredentials();
-        logIn.fillPasswordFieldWithQuizMasterCredentials();
-        logIn.clickOnLogIn();
+        logInPage = new LogInPage(webDriver);
+        logInPage.fillUsernameFieldWithQuizMasterCredentials();
+        logInPage.fillPasswordFieldWithQuizMasterCredentials();
+        logInPage.clickOnLogIn();
 
         webDriver.get("http://localhost:3000/");
         mainPage = new MainPage(webDriver);

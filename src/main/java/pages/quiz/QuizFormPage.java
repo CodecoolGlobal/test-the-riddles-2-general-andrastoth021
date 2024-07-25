@@ -1,13 +1,14 @@
-package pages;
+package pages.quiz;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.Alert;
+import pages.BasePage;
 
-public class QuizForm extends BasePage {
-    public QuizForm(WebDriver driver) {
+public class QuizFormPage extends BasePage {
+    public QuizFormPage(WebDriver driver) {
         super(driver);
     }
 

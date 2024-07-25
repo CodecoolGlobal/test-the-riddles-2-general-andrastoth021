@@ -3,11 +3,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import pages.authentication.LogIn;
-import pages.lobby.LobbyPage;
-import pages.mains.GameListPage;
-import pages.mains.MyQuizzesPage;
-import pages.player.GamePage;
+import pages.authentication.LogInPage;
+import pages.gameplay.LobbyPage;
+import pages.quiz.GameListPage;
+import pages.quiz.MyQuizzesPage;
+import pages.gameplay.GamePage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -23,12 +23,12 @@ class GameplayTest {
         driverQuizMaster.get("http://localhost:3000/login");
         driverPlayer.get("http://localhost:3000/login");
 
-        LogIn logInPage = new LogIn(driverQuizMaster);
+        LogInPage logInPage = new LogInPage(driverQuizMaster);
         logInPage.fillUsernameFieldWithQuizMasterCredentials();
         logInPage.fillPasswordFieldWithQuizMasterCredentials();
         logInPage.clickOnLogIn();
 
-        logInPage = new LogIn(driverPlayer);
+        logInPage = new LogInPage(driverPlayer);
         logInPage.fillUsernameFieldWithUserCredentials();
         logInPage.fillPasswordFieldWithUserCredentials();
         logInPage.clickOnLogIn();

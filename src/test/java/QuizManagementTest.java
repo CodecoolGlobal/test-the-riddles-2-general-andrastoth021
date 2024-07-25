@@ -1,5 +1,3 @@
-package pages;
-
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,10 +9,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.authentication.LogIn;
-import pages.mains.MainPage;
-import pages.mains.MyQuizzesPage;
-import pages.mains.QuizzesPage;
+import pages.authentication.LogInPage;
+import pages.quiz.MainPage;
+import pages.quiz.MyQuizzesPage;
+import pages.quiz.QuizFormPage;
+import pages.quiz.QuizzesPage;
 
 import java.time.Duration;
 
@@ -23,8 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class QuizManagementTest {
     private WebDriver webDriver;
-    private LogIn logIn;
-    private QuizForm quizForm;
+    private LogInPage logInPage;
+    private QuizFormPage quizFormPage;
     private MainPage mainPage;
     private MyQuizzesPage myQuizzesPage;
     private QuizzesPage quizzesPage;
@@ -40,15 +39,15 @@ public class QuizManagementTest {
         webDriver.get("http://localhost:3000/login");
         wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
 
-        logIn = new LogIn(webDriver);
-        logIn.fillFieldById(username, "user-name");
-        logIn.fillFieldById(password, "password");
-        logIn.clickOnButton("LOGIN");
+        logInPage = new LogInPage(webDriver);
+        logInPage.fillFieldById(username, "user-name");
+        logInPage.fillFieldById(password, "password");
+        logInPage.clickOnButton("LOGIN");
 
         wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Quizzes')]")));
 
-        quizForm = new QuizForm(webDriver);
+        quizFormPage = new QuizFormPage(webDriver);
         mainPage = new MainPage(webDriver);
         myQuizzesPage = new MyQuizzesPage(webDriver);
         quizzesPage = new QuizzesPage(webDriver);
@@ -65,7 +64,7 @@ public class QuizManagementTest {
 
         mainPage.clickOnQuizzes();
         myQuizzesPage.clickOnAddQuiz();
-        quizForm.createAndSaveQuiz(quizTitle, question, timeLimit, idAnswerOption1,answerOption1, idAnswerOption2, answerOption2, idAnswerOption3, answerOption3, idAnswerOption4, answerOption4, correctID);
+        quizFormPage.createAndSaveQuiz(quizTitle, question, timeLimit, idAnswerOption1,answerOption1, idAnswerOption2, answerOption2, idAnswerOption3, answerOption3, idAnswerOption4, answerOption4, correctID);
 
         mainPage.clickOnMyQuizzes();
         assertTrue(myQuizzesPage.isQuizPresent(quizTitle));
@@ -77,10 +76,10 @@ public class QuizManagementTest {
 
         myQuizzesPage.clickOnEditNthQuiz(1);
         String newQuizTitle = "Edited Quiz Title";
-        quizForm.fillQuizTitleField(newQuizTitle);
+        quizFormPage.fillQuizTitleField(newQuizTitle);
 
         int questionNumber = 1;
-        quizForm.clickOnNthQuestion(questionNumber);
+        quizFormPage.clickOnNthQuestion(questionNumber);
 
         String newQuestion = "Edited Question?";
         int newTimeLimit = 30;
@@ -94,7 +93,7 @@ public class QuizManagementTest {
         String newAnswerOption4 = "Edited Answer 4";
         int newCorrectID = 1;
 
-        quizForm.editAndSaveQuiz(newQuizTitle, newQuestion, newTimeLimit, newIdAnswerOption1, newAnswerOption1, newIdAnswerOption2, newAnswerOption2, newIdAnswerOption3, newAnswerOption3, newIdAnswerOption4, newAnswerOption4, newCorrectID);
+        quizFormPage.editAndSaveQuiz(newQuizTitle, newQuestion, newTimeLimit, newIdAnswerOption1, newAnswerOption1, newIdAnswerOption2, newAnswerOption2, newIdAnswerOption3, newAnswerOption3, newIdAnswerOption4, newAnswerOption4, newCorrectID);
 
         mainPage.clickOnMyQuizzes();
         assertTrue(myQuizzesPage.isQuizPresent(newQuizTitle), "The edited quiz title should be present.");
@@ -104,9 +103,9 @@ public class QuizManagementTest {
     public void testAddingNewQuizOnlyWithATitle() throws InterruptedException {
         mainPage.clickOnQuizzes();
         quizzesPage.clickOnAddQuiz();
-        quizForm.fillQuizTitleField("Test");
-        quizForm.clickOnSaveQuizButton();
-        quizForm.handleAlert();
+        quizFormPage.fillQuizTitleField("Test");
+        quizFormPage.clickOnSaveQuizButton();
+        quizFormPage.handleAlert();
         mainPage.clickOnMyQuizzes();
         assertTrue(myQuizzesPage.isQuizPresent("Test"));
     }

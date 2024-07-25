@@ -5,15 +5,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.lobby.LobbyPage;
-import pages.authentication.LogIn;
+import pages.gameplay.LobbyPage;
+import pages.authentication.LogInPage;
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class LobbyPageTest {
-    private LogIn logIn;
+    private LogInPage logInPage;
     private LobbyPage lobbyPage;
     private WebDriver webDriver;
     private WebDriverWait wait;
@@ -27,14 +27,14 @@ public class LobbyPageTest {
         webDriver.get("http://localhost:3000/login");
         wait = new WebDriverWait(webDriver, Duration.ofSeconds(20));
 
-        logIn = new LogIn(webDriver);
-        logIn.fillFieldById(usernameOfQuizMaster, "user-name");
-        logIn.fillFieldById(passwordOfQuizMaster, "password");
-        logIn.clickOnButton("LOGIN");
+        logInPage = new LogInPage(webDriver);
+        logInPage.fillFieldById(usernameOfQuizMaster, "user-name");
+        logInPage.fillFieldById(passwordOfQuizMaster, "password");
+        logInPage.clickOnButton("LOGIN");
 
         webDriver.get("http://localhost:3000/quiz/all");
         lobbyPage = new LobbyPage(webDriver);
-        logIn.clickOnButton("Play");
+        logInPage.clickOnButton("Play");
     }
 
     @Test

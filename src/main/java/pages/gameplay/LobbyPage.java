@@ -1,4 +1,4 @@
-package pages.lobby;
+package pages.gameplay;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
