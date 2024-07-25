@@ -13,12 +13,16 @@ import pages.quiz.MainPage;
 import pages.quiz.MyQuizzesPage;
 import pages.quiz.QuizFormPage;
 import pages.quiz.QuizzesPage;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class QuizManagementTest extends BaseTest {
     private LogInPage logInPage;
     private QuizFormPage quizFormPage;
@@ -56,6 +60,7 @@ public class QuizManagementTest extends BaseTest {
 
     @ParameterizedTest
     @CsvFileSource(resources = TEST_DATA_QUIZ_CREATION, numLinesToSkip = 1)
+    @Order(1)
     public void createQuizWithValidInputFields(String quizTitle, String question, int timeLimit,
                                                int idAnswerOption1, String answerOption1, int idAnswerOption2, String answerOption2, int idAnswerOption3, String answerOption3, int idAnswerOption4, String answerOption4,
                                                int correctID) {
@@ -69,6 +74,7 @@ public class QuizManagementTest extends BaseTest {
     }
 
     @Test
+    @Order(2)
     public void testEditingExistingQuiz() {
         mainPage.clickOnMyQuizzes();
 
@@ -98,17 +104,19 @@ public class QuizManagementTest extends BaseTest {
     }
 
     @Test
+    @Order(3)
     public void testAddingNewQuizOnlyWithATitle() {
         mainPage.clickOnQuizzes();
         quizzesPage.clickOnAddQuiz();
-        quizFormPage.fillQuizTitleField("Test");
+        quizFormPage.fillQuizTitleField("Quiz only with a title");
         quizFormPage.clickOnSaveQuizButton();
         quizFormPage.handleAlert();
         mainPage.clickOnMyQuizzes();
-        assertTrue(myQuizzesPage.isQuizPresent("Test"));
+        assertTrue(myQuizzesPage.isQuizPresent("Quiz only with a title"));
     }
 
     @Test
+    @Order(4)
     public void testDeletingExistingQuiz() {
 
         mainPage.clickOnMyQuizzes();
