@@ -14,12 +14,12 @@ public abstract class AuthForm extends BasePage {
         super(driver);
     }
 
-    public void fillFieldById(String input, String id) {
-        WebElement inputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+    public void fillFieldById(String input, WebElement fieldElement) {  // accepting a WebElement for compatibility with PageFactory
+        WebElement inputField = wait.until(ExpectedConditions.visibilityOfElementLocated(fieldElement));
         inputField.sendKeys(input);
     }
 
-    public void clickOnButton(String buttonText) {
+    public void clickOnButton(String buttonText) {  // should accept a WebElement as well
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         String xpath = String.format("//button[text()='%s']", buttonText);
         WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));

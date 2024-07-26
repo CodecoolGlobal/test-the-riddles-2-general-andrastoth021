@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import pages.BasePage;
 import pages.authentication.LogInPage;
 
-public class MainPage extends BasePage {
+public class MainPage extends BasePage {  // navigation with URLs is more stable & recommended
     private final By gamesBy = By.xpath("//span[contains(text(),'Games')]");
     private final By quizzesBy = By.xpath("//span[contains(text(),'Quizzes')]");
     private final By myQuizzesBy = By.xpath("//span[contains(text(),'My Quizzes')]");

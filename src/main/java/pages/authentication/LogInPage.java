@@ -9,6 +9,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 // TODO below methods remains till all codes refactored where currently used
 
 public class LogInPage extends AuthForm {
+
+    @FindBy(id = "user-name")
+    private WebElement usernameInputField;
+
     private final Dotenv dotenv = Dotenv.configure().load();
     private final String username = dotenv.get("REPTILE_USER_USERNAME");
     private final String password = dotenv.get("REPTILE_USER_PASSWORD");
@@ -20,8 +24,11 @@ public class LogInPage extends AuthForm {
     }
 
     public void fillUsernameFieldWithUserCredentials() {
-        WebElement inputField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user-name")));
-        inputField.sendKeys(username);
+        fillFieldById(username, usernameInputField);  // username read from .env
+    }
+
+    public void fillUsernameFieldWithUserCredentials(String username) {
+        fillFieldById(username, usernameInputField);
     }
 
     public void fillPasswordFieldWithUserCredentials() {

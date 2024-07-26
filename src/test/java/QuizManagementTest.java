@@ -22,6 +22,8 @@ import java.time.Duration;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+// test cases should be isolated
+// test data should be cleaned up after every test case
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class QuizManagementTest extends BaseTest {
     private LogInPage logInPage;
@@ -45,7 +47,9 @@ public class QuizManagementTest extends BaseTest {
         logInPage.fillFieldById(username, "user-name");
         logInPage.fillFieldById(password, "password");
         logInPage.clickOnButton("LOGIN");
+        // loginPage.successfulLogin();
 
+        // waiting should not happen in the test class under POM
         wait = new WebDriverWait(driverQuizMaster, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Quizzes')]")));
 
@@ -54,7 +58,7 @@ public class QuizManagementTest extends BaseTest {
         myQuizzesPage = new MyQuizzesPage(driverQuizMaster);
         quizzesPage = new QuizzesPage(driverQuizMaster);
 
-        Thread.sleep(2000);
+        Thread.sleep(2000);  // why is this needed?
     }
 
 
@@ -69,7 +73,7 @@ public class QuizManagementTest extends BaseTest {
         myQuizzesPage.clickOnAddQuiz();
         quizFormPage.createAndSaveQuiz(quizTitle, question, timeLimit, idAnswerOption1,answerOption1, idAnswerOption2, answerOption2, idAnswerOption3, answerOption3, idAnswerOption4, answerOption4, correctID);
 
-        driverQuizMaster.get("http://localhost:3000/quiz/my");
+        driverQuizMaster.get("http://localhost:3000/quiz/my");  // navigating should happen in page classes
         assertTrue(myQuizzesPage.isQuizPresent(quizTitle));
     }
 
