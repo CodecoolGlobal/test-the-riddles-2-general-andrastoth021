@@ -103,20 +103,20 @@ public class QuizManagementTest extends BaseTest {
         assertTrue(myQuizzesPage.isQuizPresent(newQuizTitle), "The edited quiz title should be present.");
     }
 
-//    @Test
-//    @Order(3)
-//    public void testAddingNewQuizOnlyWithATitle() {
-//        mainPage.clickOnMyQuizzes();
-//        myQuizzesPage.clickOnAddQuiz();
-//        quizFormPage.fillQuizTitleField("Quiz only with a title");
-//        quizFormPage.clickOnSaveQuizButton();
-//        quizFormPage.handleAlert();
-//        mainPage.clickOnMyQuizzes();
-//        assertTrue(myQuizzesPage.isQuizPresent("Quiz only with a title"));
-//    }
-
     @Test
     @Order(3)
+    public void testAddingNewQuizOnlyWithATitle() {
+        mainPage.clickOnMyQuizzes();
+        myQuizzesPage.clickOnAddQuiz();
+        quizFormPage.fillQuizTitleField("Quiz only with a title");
+        quizFormPage.clickOnSaveQuizButton();
+        quizFormPage.handleAlert();
+        driverQuizMaster.get("http://localhost:3000/quiz/my");
+        assertTrue(myQuizzesPage.isQuizPresent("Quiz only with a title"));
+    }
+
+    @Test
+    @Order(4)
     public void testDeletingExistingQuiz() {
 
         mainPage.clickOnMyQuizzes();
