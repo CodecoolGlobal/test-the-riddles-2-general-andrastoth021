@@ -12,9 +12,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SignUpPageTest extends BaseTest {
     private final Dotenv dotenv = Dotenv.configure().load();
-    private final String username = dotenv.get("REPTILE_QUIZMASTER_USERNAME");
-    private final String email = dotenv.get("REPTILE_QUIZMASTER_EMAIL");
-    private final String password = dotenv.get("REPTILE_QUIZMASTER_PASSWORD");
+    private final String username = dotenv.get("REPTILE_USER_USERNAME");
+    private final String email = dotenv.get("REPTILE_USER_EMAIL");
+    private final String password = dotenv.get("REPTILE_USER_PASSWORD");
     private SignUpPage signUpPage;
 
     @BeforeEach
