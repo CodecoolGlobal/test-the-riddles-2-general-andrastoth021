@@ -9,6 +9,8 @@ functionalities.
 
 ## System Under Test (SUT)
 
+[![SUT][SUT-Screenshot]][sut-screenshot]
+
 The SUT for this project is the **Reptile Riddles** application. It is a riddle game where players solve quizzes based
 on questions. You can find the SUT repository here:
 [Reptile Riddles SUT Repository](https://github.com/CodecoolGlobal/reptile-riddles-2-general-reveszter).
@@ -19,6 +21,7 @@ on questions. You can find the SUT repository here:
 - **Riddle solving:** Tests to verify that users can solve riddles based on the provided questions.
 - **Role-based actions:** Tests that ensure different user roles (e.g., quizmaster) perform specific tasks correctly.
 - **Score tracking:** Verifies that the system tracks and updates user scores based on their answers.
+
 
 ## Technologies Used
 
@@ -102,3 +105,12 @@ on questions. You can find the SUT repository here:
     - Ensure the user is logged out after the test.
     - Clean up any test data or reset states that were changed during the test.
 
+
+[![TEST][TEST-Result]][test-result]
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
+[sut-screenshot]: src/test/resources/images/logo_big.png
+[test-result]: src/test/resources/images/test.png
