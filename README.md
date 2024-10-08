@@ -114,3 +114,8 @@ on questions. You can find the SUT repository here:
 
 [sut-screenshot]: src/test/resources/images/logo_big.png
 [test-result]: src/test/resources/images/test.png
+[java]: https://img.shields.io/badge/java-%23ED8B00?style=for-the-badge&logoColor=%23ED8B00&labelColor=white&color=%23ED8B00&link=https%3A%2F%2Fwww.java.com%2Fen%2F
+[junit]: https://img.shields.io/badge/junit_5-%2325A162?style=for-the-badge&logo=junit5&logoColor=%2325A162&labelColor=white&color=%2325A162&link=https%3A%2F%2Fjunit.org%2Fjunit5%2F
+[selenium]: https://img.shields.io/badge/selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=%2343B02A&labelColor=white&color=%2343B02A&link=https%3A%2F%2Fwww.selenium.dev%2F
+[maven]: https://img.shields.io/badge/maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white&link=https%3A%2F%2Fmaven.apache.org%2F
+
