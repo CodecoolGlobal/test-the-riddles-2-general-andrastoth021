@@ -25,10 +25,10 @@ on questions. You can find the SUT repository here:
 
 ## Technologies Used
 
-- **Java:** The primary programming language for writing the test automation scripts.
-- **Selenium:** Web browser automation tool used to interact with the application's front-end.
-- **JUnit:** Testing framework used for structuring and executing test cases.
-- **Maven:** Build automation tool used to manage dependencies and run test cases.
+- ![Java][java] The primary programming language for writing the test automation scripts.
+- ![Selenium][selenium] Web browser automation tool used to interact with the application's front-end.
+- ![JUnit][junit] Testing framework used for structuring and executing test cases.
+- ![Maven][maven]  Build automation tool used to manage dependencies and run test cases.
 
 ## Installation Instructions
 
